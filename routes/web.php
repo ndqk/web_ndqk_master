@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Notifications\Mission;
+use App\Entity\User;
+use Illuminate\Support\Str;
 
 /*
 |--------------------------------------------------------------------------
@@ -82,10 +84,22 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['che
         });
     });
 
+    //notification
+    Route::group(['prefix' => 'notification'], function () {
+        Route::get('all', 'NotificationController@allNotifications')->name('notification.all');
+        Route::get('list', 'NotificationController@listNotifications')->name('notification.list');
+        Route::get('detail/{id}', 'NotificationController@detail')->name('notification.detail');
+    });
     Route::get('/test', function(){
-        Auth::user()->notify(new Mission('ndqk'));
+        $user = User::findOrFail(9);
+        $title = Str::random(10);
+        $link = 'https://www.youtube.com/watch?v=RlBkvjVss-s';
+        $icon = 'far fa-list-alt';
+        $user->notify(new Mission($title, $link, $icon));
     });
 
+    //mail
+    Route::resource('mail', 'MailController');
 });
 
 Route::group(['prefix' => '/', 'namespace' => 'Site'], function () {

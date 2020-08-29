@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Entity\{User, TodoList, UserHasTodo};
+use App\Notifications\Mission;
 
 class TodolistController extends Controller
 {
@@ -75,6 +76,13 @@ class TodolistController extends Controller
             UserHasTodo::insert(
                 ['user_id' => $user, 'todo_id' => $storeTodo->id]
             );
+            $newNotification = new Mission(
+                'Bạn được thêm vào 1 công việc',
+                route('todo-list.show', $storeTodo->id),
+                'far fa-list-alt'
+            );
+            $user = User::findOrFail($user);
+            $user->notify($newNotification);
         }     
 
         return redirect()->back()->with('status', 'Thêm thành công');

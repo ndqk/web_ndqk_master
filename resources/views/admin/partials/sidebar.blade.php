@@ -9,14 +9,14 @@
     <!-- Sidebar -->
     <div class="sidebar">
       <!-- Sidebar user panel (optional) -->
-      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+      {{-- <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
           <img src="{{asset('dist/img/user2-160x160.jpg')}}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
             <a href="{{route('profile.index')}}" class="d-block">{{\Illuminate\Support\Facades\Auth::user()->name}}</a>
         </div>
-      </div>
+      </div> --}}
 
       <!-- Sidebar Menu -->
       <nav class="mt-2">
@@ -43,23 +43,26 @@
           
           <li class="nav-header">QUẢN LÝ SẢN PHẨM</li>
 
-          <li class="nav-item has-treeview {{request()->routeIs('category*') ? 'menu-open' : ''}}">
-            <a href="{{asset('#')}}" class="nav-link {{request()->routeIs('category*') ? 'active' : ''}}">
-              <i class="nav-icon fas fa-list"></i>
-              <p>
-                Quản lý Category
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{{route('category.index')}}" class="nav-link {{request()->routeIs('category.index') ? 'active' : ''}}">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Danh sách Category</p>
-                </a>
-              </li>
-            </ul>
-          </li>
+          @can('category-list')
+            <li class="nav-item has-treeview {{request()->routeIs('category*') ? 'menu-open' : ''}}">
+              <a href="{{asset('#')}}" class="nav-link {{request()->routeIs('category*') ? 'active' : ''}}">
+                <i class="nav-icon fas fa-list"></i>
+                <p>
+                  Quản lý Category
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="{{route('category.index')}}" class="nav-link {{request()->routeIs('category.index') ? 'active' : ''}}">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Danh sách Category</p>
+                  </a>
+                </li>
+              </ul>
+            </li>  
+          @endcan
+          @can('post-list')
           <li class="nav-item has-treeview {{request()->routeIs('post*') ? 'menu-open' : ''}}">
             <a href="{{asset('#')}}" class="nav-link {{request()->routeIs('post*') ? 'active' : ''}}">
               <i class="nav-icon fab fa-product-hunt"></i>
@@ -75,146 +78,196 @@
                   <p>Danh sách bài viết</p>
                 </a>
               </li>
-              <li class="nav-item">
-                <a href="{{route('post.create')}}" class="nav-link {{request()->routeIs('post.create') ? 'active' : ''}}">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Thêm mới bài viết</p>
-                </a>
-              </li>
+              @can('post-create')
+                <li class="nav-item">
+                  <a href="{{route('post.create')}}" class="nav-link {{request()->routeIs('post.create') ? 'active' : ''}}">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Thêm mới bài viết</p>
+                  </a>
+                </li>
+              @endcan
             </ul>
           </li>
+          @endcan
 
           <li class="nav-header">QUẢN LÝ TÀI KHOẢN</li>
 
-          <li class="nav-item has-treeview {{request()->routeIs('role*') ? 'menu-open' : ''}}">
-            <a href="{{asset('#')}}" class="nav-link {{request()->routeIs('role*') ? 'active' : ''}}">
-              <i class="nav-icon fas fa-bezier-curve"></i>
-              <p>
-                Quản lý Role
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{{route('role.index')}}" class="nav-link {{request()->routeIs('role.index') ? 'active' : ''}}">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Danh sách Role</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{route('role.create')}}" class="nav-link {{request()->routeIs('role.create') ? 'active' : ''}}">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Thêm mới Role</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-
-          <li class="nav-item has-treeview {{request()->routeIs('user*') ? 'menu-open' : ''}}">
-            <a href="{{asset('#')}}" class="nav-link {{request()->routeIs('user*') ? 'active' : ''}}">
-              <i class="nav-icon far fa-user"></i>
-              <p>
-                Quản lý User
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{{route('user.list')}}" class="nav-link {{request()->routeIs('user.list') ? 'active' : ''}}">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Danh sách User</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{route('user.create')}}" class="nav-link {{request()->routeIs('user.create') ? 'active' : ''}}">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Thêm mới User</p>
-                </a>
-              </li>
-            </ul>
-          </li>
+          @can('role-list')
+            <li class="nav-item has-treeview {{request()->routeIs('role*') ? 'menu-open' : ''}}">
+              <a href="{{asset('#')}}" class="nav-link {{request()->routeIs('role*') ? 'active' : ''}}">
+                <i class="nav-icon fas fa-bezier-curve"></i>
+                <p>
+                  Quản lý Role
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="{{route('role.index')}}" class="nav-link {{request()->routeIs('role.index') ? 'active' : ''}}">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Danh sách Role</p>
+                  </a>
+                </li>
+                @can('role-create')
+                  <li class="nav-item">
+                    <a href="{{route('role.create')}}" class="nav-link {{request()->routeIs('role.create') ? 'active' : ''}}">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Thêm mới Role</p>
+                    </a>
+                  </li>
+                @endcan
+              </ul>
+            </li>
+          @endcan
+          @can('user-list')
+            <li class="nav-item has-treeview {{request()->routeIs('user*') ? 'menu-open' : ''}}">
+              <a href="{{asset('#')}}" class="nav-link {{request()->routeIs('user*') ? 'active' : ''}}">
+                <i class="nav-icon far fa-user"></i>
+                <p>
+                  Quản lý User
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="{{route('user.list')}}" class="nav-link {{request()->routeIs('user.list') ? 'active' : ''}}">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Danh sách User</p>
+                  </a>
+                </li>
+                @can('user-create')
+                  <li class="nav-item">
+                    <a href="{{route('user.create')}}" class="nav-link {{request()->routeIs('user.create') ? 'active' : ''}}">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Thêm mới User</p>
+                    </a>
+                  </li>
+                @endcan
+              </ul>
+            </li> 
+          @endcan
+          
 
           <li class="nav-header">QUẢN LÝ KHÁCH HÀNG</li>
-
-          <li class="nav-item has-treeview {{request()->routeIs('customer*') ? 'menu-open' : ''}}">
-            <a href="{{asset('#')}}" class="nav-link {{request()->routeIs('customer*') ? 'active' : ''}}">
-              <i class="nav-icon fas fa-users"></i>
-              <p>
-                Quản lý Customer
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{{route('customer.list')}}" class="nav-link {{request()->routeIs('customer.list') ? 'active' : ''}}">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Danh sách Customer</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{route('customer.create')}}" class="nav-link {{request()->routeIs('customer.create') ? 'active' : ''}}">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Thêm mới Customer</p>
-                </a>
-              </li>
-            </ul>
-          </li>
+          @can('user-list')
+            <li class="nav-item has-treeview {{request()->routeIs('customer*') ? 'menu-open' : ''}}">
+              <a href="{{asset('#')}}" class="nav-link {{request()->routeIs('customer*') ? 'active' : ''}}">
+                <i class="nav-icon fas fa-users"></i>
+                <p>
+                  Quản lý Customer
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="{{route('customer.list')}}" class="nav-link {{request()->routeIs('customer.list') ? 'active' : ''}}">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Danh sách Customer</p>
+                  </a>
+                </li>
+                @can('user-create')
+                  <li class="nav-item">
+                    <a href="{{route('customer.create')}}" class="nav-link {{request()->routeIs('customer.create') ? 'active' : ''}}">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Thêm mới Customer</p>
+                    </a>
+                  </li>
+                @endcan
+              </ul>
+            </li> 
+          @endcan
+          
 
           <li class="nav-header">KHÁC</li>
 
-          <li class="nav-item has-treeview {{request()->routeIs('banner*') ? 'menu-open' : ''}}">
-            <a href="{{asset('#')}}" class="nav-link {{request()->routeIs('banner*') ? 'active' : ''}}">
-              <i class="nav-icon fas fa-images"></i>
+          {{-- <li class="nav-item has-treeview {{request()->routeIs('mail*') ? 'menu-open' : ''}}">
+            <a href="{{asset('#')}}" class="nav-link {{request()->routeIs('mail*') ? 'active' : ''}}">
+              <i class="nav-icon fas fa-envelope"></i>
               <p>
-                Quản lý Banner
+                Mailbox
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="{{route('banner.index')}}" class="nav-link {{request()->routeIs('banner.index') ? 'active' : ''}}">
+                <a href="{{route('mail.index')}}" class="nav-link {{request()->routeIs('mail.index') ? 'active' : ''}}">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Danh sách banner</p>
+                  <p>Inbox</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{route('banner.create')}}" class="nav-link {{request()->routeIs('banner.create') ? 'active' : ''}}">
+                <a href="{{route('mail.create')}}" class="nav-link {{request()->routeIs('mail.create') ? 'active' : ''}}">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Thêm mới banner</p>
+                  <p>Compose</p>
                 </a>
               </li>
             </ul>
-          </li>
+          </li> --}}
 
-          <li class="nav-item has-treeview {{request()->routeIs('todo-list*') ? 'menu-open' : ''}}">
-            <a href="{{asset('#')}}" class="nav-link {{request()->routeIs('todo-list*') ? 'active' : ''}}">
-              <i class="nav-icon far fa-list-alt"></i>
-              <p>
-                Quản lý việc cần làm
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{{route('todo-list.index')}}" class="nav-link {{request()->routeIs('todo-list.index') ? 'active' : ''}}">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Danh sách việc cần làm</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{route('todo-list.create')}}" class="nav-link {{request()->routeIs('todo-list.create') ? 'active' : ''}}">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Thêm mới việc cần làm</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{route('todo-list.approve.list')}}" class="nav-link {{request()->routeIs('todo-list.approve*') ? 'active' : ''}}">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Duyệt</p>
-                </a>
-              </li>
-            </ul>
-          </li>
+          @can('banner-list')
+            <li class="nav-item has-treeview {{request()->routeIs('banner*') ? 'menu-open' : ''}}">
+              <a href="{{asset('#')}}" class="nav-link {{request()->routeIs('banner*') ? 'active' : ''}}">
+                <i class="nav-icon fas fa-images"></i>
+                <p>
+                  Quản lý Banner
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="{{route('banner.index')}}" class="nav-link {{request()->routeIs('banner.index') ? 'active' : ''}}">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Danh sách banner</p>
+                  </a>
+                </li>
+                @can('banner-create')
+                  <li class="nav-item">
+                    <a href="{{route('banner.create')}}" class="nav-link {{request()->routeIs('banner.create') ? 'active' : ''}}">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Thêm mới banner</p>
+                    </a>
+                  </li>
+                @endcan
+              </ul>
+            </li>
+          @endcan
+          
+          @can('todo-list')
+            <li class="nav-item has-treeview {{request()->routeIs('todo-list*') ? 'menu-open' : ''}}">
+              <a href="{{asset('#')}}" class="nav-link {{request()->routeIs('todo-list*') ? 'active' : ''}}">
+                <i class="nav-icon far fa-list-alt"></i>
+                <p>
+                  Quản lý việc cần làm
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="{{route('todo-list.index')}}" class="nav-link {{request()->routeIs('todo-list.index') ? 'active' : ''}}">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Danh sách việc cần làm</p>
+                  </a>
+                </li>
+                @can('todo-create')
+                  <li class="nav-item">
+                    <a href="{{route('todo-list.create')}}" class="nav-link {{request()->routeIs('todo-list.create') ? 'active' : ''}}">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Thêm mới việc cần làm</p>
+                    </a>
+                  </li>
+                @endcan
+                @can('todo-approve-list')
+                  <li class="nav-item">
+                    <a href="{{route('todo-list.approve.list')}}" class="nav-link {{request()->routeIs('todo-list.approve*') ? 'active' : ''}}">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Duyệt</p>
+                    </a>
+                  </li>
+                @endcan
+              </ul>
+            </li> 
+          @endcan
+          
 
           {{-- <li class="nav-header">QUẢN LÝ QUẢNG CÁO</li> --}}
         </ul>

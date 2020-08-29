@@ -8,7 +8,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="csrf-token" content="{{ csrf_token() }}">
  
-
+  <script>
+    window.Laravel = {!! json_encode([
+        'csrfToken' => csrf_token(),
+        'user' => Auth::user()
+    ]) !!};
+  </script>
 
   <!-- Font Awesome -->
   <link rel="stylesheet" href="{{asset('plugins/fontawesome-free/css/all.min.css')}}">
@@ -30,6 +35,18 @@
   <link rel="stylesheet" href="{{asset('plugins/summernote/summernote-bs4.css')}}">
   <!-- Google Font: Source Sans Pro -->
   <link href="{{asset('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700')}}" rel="stylesheet">
+  <style>
+    .show-all-notifications{
+        height: 500px;
+        overflow: auto;
+    }
+    .disable-custom{
+      display: none;
+    }
+    .un-read-notification{
+      background: #a9a9a9;
+    }
+  </style>
   @yield('css')
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -95,11 +112,13 @@
 </script>
 <!-- bs-custom-file-input -->
 <script src="{{asset('plugins/bs-custom-file-input/bs-custom-file-input.min.js')}}"></script>
+
 <script type="text/javascript">
   $(document).ready(function () {
     bsCustomFileInput.init();
   });
-  </script>
+  
+</script>
 <!-- Bootstrap 4 -->
 <script src="{{asset('plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <!-- ChartJS -->
@@ -126,34 +145,18 @@
 <script src="{{asset('dist/js/pages/dashboard.js')}}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{asset('dist/js/demo.js')}}"></script>
+<script src="{{asset('dist/js/demo.js')}}"></script>
 
-{{-- <script src="https://js.pusher.com/7.0/pusher.min.js"></script> --}}
+<script src="{{asset('js/app.js')}}" type="text/javascript"><script>
 
-<script src="{{asset('js/app.js')}}"><script>
+<script
+  src="https://code.jquery.com/jquery-3.5.1.min.js"
+  integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+  crossorigin="anonymous"></script>
 
-
-<script>
-
-    // Pusher.logToConsole = true;
-
-    // var pusher = new Pusher('b0f8d19a082a86999a5e', {
-    //   cluster: 'ap1'
-    // });
-
-    // var channel = pusher.subscribe('my-channel');
-    // channel.bind('my-event', function(data) {
-    //   alert(JSON.stringify(data));
-    // });
-
-    // window.Echo.channel('my-channel')
-    //     .listen('my-event', (data) => {
-    //         alert(data);
-    //     })
-</script>
 
 @stack('script')
 @yield('js')
-
 
 
 </body>

@@ -27,16 +27,9 @@ window.Echo = new Echo({
     encrypted: true
 });
 
-Pusher.logToConsole = true;
 
-let channel = window.Echo.private('App.Entity.User.9');
-channel.notification((notification) => {
-    alert(notification);
-});
-
-
-// console.log('ndqk');
+console.log(window.Laravel.user.id);
 // console.log(Echo);
 // console.log(window.Echo);
-console.log(channel);
+//console.log(channel);
 
