@@ -42,31 +42,14 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['che
         Route::post('/', 'ProfileController@update')->name('profile.update');
     });
     //user
-    Route::group(['prefix' => 'user'], function () {
-        Route::get('/list', 'UserController@showList')->name('user.list');
-        Route::get('/get-list', 'UserController@getList')->name('user.get.list');
-
-        Route::get('/create', 'UserController@create')->name('user.create');
-        Route::post('/store', 'UserController@store')->name('user.store');
-
-        Route::get('/edit/{id}', 'UserController@showEditForm')->name('user.edit');
-        Route::post('/edit/{id}', 'UserController@edit')->name('user.edit');
-
-        Route::get('/delete/{id}', 'UserController@delete')->name('user.delete');
-    });
+    Route::resource('user', 'UserController');
+    Route::get('/user-list', 'UserController@getList')->name('user.list');
+    Route::get('user/delete/{id}', ['as' => 'user.delete', 'uses' => 'UserController@destroy']);
+    
     //customer
-    Route::group(['prefix' => 'customer'], function () {
-        Route::get('/list', 'CustomerController@showList')->name('customer.list');
-        Route::get('/get-list', 'CustomerController@getList')->name('customer.get.list');
-
-        Route::get('/create', 'CustomerController@create')->name('customer.create');
-        Route::post('/store', 'CustomerController@store')->name('customer.store');
-
-        Route::get('/edit/{id}', 'CustomerController@showEditForm')->name('customer.edit');
-        Route::post('/edit/{id}', 'CustomerController@edit')->name('customer.edit');
-
-        Route::get('/delete/{id}', 'CustomerController@delete')->name('customer.delete');
-    });
+    Route::resource('customer', 'CustomerController');
+    Route::get('/customer-list', 'CustomerController@getList')->name('customer.list');
+    Route::get('customer/delete/{id}', ['as' => 'customer.delete', 'uses' => 'CustomerController@destroy']);
 
     //banner
     Route::resource('banner', 'BannerController');

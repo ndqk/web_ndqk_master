@@ -49,7 +49,7 @@
                 serverSide: true,
                 pageLength: 6,
                 ajax : {
-                    url : '{{ route('customer.get.list') }}',
+                    url : '{{ route('customer.list') }}',
                     type : 'GET',
                 },
                 columns : [

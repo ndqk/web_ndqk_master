@@ -130,7 +130,7 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="{{route('user.list')}}" class="nav-link {{request()->routeIs('user.list') ? 'active' : ''}}">
+                  <a href="{{route('user.index')}}" class="nav-link {{request()->routeIs('user.index') ? 'active' : ''}}">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Danh sách User</p>
                   </a>
@@ -160,7 +160,7 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="{{route('customer.list')}}" class="nav-link {{request()->routeIs('customer.list') ? 'active' : ''}}">
+                  <a href="{{route('customer.index')}}" class="nav-link {{request()->routeIs('customer.index') ? 'active' : ''}}">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Danh sách Customer</p>
                   </a>

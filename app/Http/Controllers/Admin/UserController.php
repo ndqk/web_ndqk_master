@@ -25,7 +25,7 @@ class UserController extends Controller
         $this->middleware('permission:user-delete', ['only' => 'delete']);
     }
 
-    public function showList(){
+    public function index(){
         return view('admin.user.list');
     }
 
@@ -62,13 +62,13 @@ class UserController extends Controller
         return redirect()->back()->with('status', 'Thêm thành công');
     }
 
-    public function showEditForm($userId){
+    public function edit($userId){
         $user = User::findOrFail($userId);
         $roles = Role::pluck('name','name')->all();
         return view('admin.user.edit', compact('user', 'roles'));
     }
 
-    public function edit(EditUserRequest $request, $userId){
+    public function update(EditUserRequest $request, $userId){
         $user = User::findOrFail($userId);
     
         $user->update([
@@ -84,7 +84,7 @@ class UserController extends Controller
         return redirect()->back()->with('status', 'Chỉnh sửa thành công');
     }
 
-    public function delete($userId){
+    public function destroy($userId){
         $deleteUser = User::findOrFail($userId);
         $deleteUser->delete();
         $deleteModel_has_role = DB::table('model_has_roles')->where('model_id', $userId)->delete();
