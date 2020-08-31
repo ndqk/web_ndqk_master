@@ -5,11 +5,11 @@
     
 @endsection
 
-@section('titleHeader', 'List product')
-@section('nameRoute', 'Product  / List')
+@section('titleHeader', 'List Post')
+@section('nameRoute', 'Post')
 
 @section('content')
-@include('partials.alert')
+
 <div class="row">
     <div class="col-12">
         <div class="card card-primary">
@@ -56,7 +56,7 @@
                 columns : [
                     {data : 'id', name : 'id'},
                     {data : 'title', name : 'title'},
-                    {data : 'title', name : 'categories.title'},
+                    {data : 'category', name : 'categories.title'},
                     {data : 'image', render : function(data){
                         return '<img src="/upload/image/post/'+data+'" width="100" />';
                     },  name : 'images.image'},

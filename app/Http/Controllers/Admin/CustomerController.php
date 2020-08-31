@@ -2,19 +2,20 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 use Yajra\Datatables\Datatables;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
+
 use App\Entity\User;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
-
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\EditUserRequest;
 
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class CustomerController extends Controller
 {
@@ -70,16 +71,37 @@ class CustomerController extends Controller
 
     public function update(EditUserRequest $request, $userId){
         $user = User::findOrFail($userId);
-    
-        $user->update([
-            'name' => $request->input('name'),
-            'email' => $request->input('email'),
-            'password' => bcrypt($request->input('password')),
-            'address' => $request->input('address'),
-            'phone' => $request->input('phone'),
-        ]);        
+        $updateData = [
+            'name' => $request->name,
+            'password' => bcrypt($request->password),
+            'address' => $request->address,
+        ];
 
-        $user->syncRoles([$request->input('role')]);
+        if($request->email != $user->email)
+            $updateData['email'] = $request->email;
+        
+        if($request->phone != $user->phone)
+            $updateData['phone'] = $request->phone;
+
+        $rules = [
+            'email' => 'sometimes|required|unique:users',
+            'phone' => 'sometimes|required|unique:users'
+        ];
+        
+        $messages = [
+            'email.unique' => 'Email đã được sử dụng',
+            'phone.unique' => 'Số điện thoại đã được sử dụng'
+        ];
+
+        $validator = Validator::make($updateData, $rules, $messages);
+
+        if ($validator->fails())
+        {
+            return redirect()->back()->withErrors($validator);
+        }
+        
+        $user->update($updateData);        
+        $user->syncRoles([$request->role]);
         
         return redirect()->back()->with('status', 'Chỉnh sửa thành công');
     }

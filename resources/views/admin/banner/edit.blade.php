@@ -1,10 +1,10 @@
 @extends('admin.layout.master')
 
 @section('titleHeader', 'Edit Banner')
-@section('nameRoute', 'Edit Banner')
+@section('nameRoute', 'Banner / Edit')
 
 @section('content')
-@include('partials.alert')
+
 <div class="card card-primary">
     <div class="card-header">
       <h3 class="card-title">Edit Banner</h3>
@@ -27,7 +27,7 @@
                 <div class="col-sm-6">
                     <!-- text input -->
                     <div class="form-group">
-                    <label>Link</label>
+                    <label>Link*</label>
                     <input type="text" class="form-control"  name="link" value="{{$editBanner->link ? $editBanner->link : ''}}">
                     </div>
                 </div>

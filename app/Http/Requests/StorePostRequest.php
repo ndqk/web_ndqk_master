@@ -31,4 +31,14 @@ class StorePostRequest extends FormRequest
             'status' => 'required'
         ];
     }
+
+    public function messages(){
+        return [
+            'title.required' => 'Title không được để trống',
+            'category.required' => 'Category không được để trống',
+            'previewImage.required' => 'Ảnh không được để trống',
+            'content.required' => 'Content không được để trống',
+            'status.required' => 'Status không được để trống'
+        ];
+    }
 }

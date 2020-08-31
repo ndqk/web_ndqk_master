@@ -34,7 +34,7 @@ class LoginRequest extends FormRequest
             'email.required' => 'Vui lòng nhập email',
             'email.email' => 'Vui lòng nhập email chính xác',
             'password.required' => 'Vui lòng nhập mật khẩu',
-            'password.min:6' => 'Mật khẩu ít nhất 6 kí tự'
+            'password.min' => 'Mật khẩu ít nhất 6 kí tự'
         ];
     }
     

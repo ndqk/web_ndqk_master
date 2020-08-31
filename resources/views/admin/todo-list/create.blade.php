@@ -8,7 +8,7 @@
 @endsection
 
 @section('content')
-@include('partials.alert')
+
 <div class="card card-primary">
     <div class="card-header">
       <h3 class="card-title">Thêm mới bài viết</h3>
@@ -20,11 +20,11 @@
       <div class="card-body">
         <div class="form-group">
             <label for="InputName">Title *</label>
-            <input type="text" name="title" id="InputName" class="form-control" placeholder="Title" autocomplete="off" required>
+            <input type="text" name="title" id="InputName" class="form-control" placeholder="Title" autocomplete="off">
         </div>
         <div class="form-group">
             <label for="InputDate">Deadline *</label>
-            <input type="date" name="date" id="InputDate" class="form-control" placeholder="Date" required>
+            <input type="date" name="date" id="InputDate" class="form-control" placeholder="Date" >
         </div>
         <div class="form-group">
             <label for="InputCategory">User *:</label>

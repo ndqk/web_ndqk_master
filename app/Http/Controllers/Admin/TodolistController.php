@@ -5,10 +5,15 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\DB;
+
 use Illuminate\Support\Facades\Auth;
 use App\Entity\{User, TodoList, UserHasTodo};
+
 use App\Notifications\Mission;
+
+use App\Http\Requests\{StoreTodoRequest};
 
 class TodolistController extends Controller
 {
@@ -26,23 +31,27 @@ class TodolistController extends Controller
 
     public function index()
     {
-        $listTodo = TodoList::select('id', 'title', 'deadline')
+        return view('admin.todo-list.list');
+    }
+
+    public function getTodo(){
+        $todo = TodoList::select('id', 'title', 'deadline')
                                 ->with(['users' => function($q){
                                     return $q->with(['user' => function($q){
                                         return $q->select('id','name');
                                     }]);
-                                }])
-                                ->get();
-        return view('admin.todo-list.list', [
-            'listTodo' => $listTodo
-        ]);
+                                }]);
+                                
+        return Datatables::of($todo)->addColumn('action', function($todo){
+                $string = '<a href="'.route('todo-list.show', $todo->id).'">Detail</a>';
+                $string .=   '<a href="'.route('todo-list.edit', $todo->id).'"> &emsp;Edit </a>';
+                $string .=  '<a href="'.route('todo-list.delete', $todo->id).'">&emsp;Delete</a>';                                    
+                
+                return $string;
+        })->make(true);
+        
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $users = User::join('model_has_roles', 'users.id', 'model_has_roles.model_id')
@@ -59,7 +68,7 @@ class TodolistController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreTodoRequest $request)
     {
         $todoList = [
             'title' => $request->title,
@@ -88,12 +97,6 @@ class TodolistController extends Controller
         return redirect()->back()->with('status', 'Thêm thành công');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         $detailTodo = TodoList::findOrFail($id);
@@ -106,12 +109,6 @@ class TodolistController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $editTodo = TodoList::with('users')
@@ -126,7 +123,6 @@ class TodolistController extends Controller
             $userChecked[] = $user->user_id;
         }
         
-
         return view('admin.todo-list.edit', [
             'editTodo' => $editTodo,
             'users' => $users,
@@ -134,23 +130,23 @@ class TodolistController extends Controller
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function update(StoreTodoRequest $request, $id)
     {
         $updateTodo = TodoList::findOrFail($id);
         $currentUsers = $updateTodo->users()->get();
         
         UserHasTodo::where('todo_id', $id)->delete();
-        foreach($request->users as $user){
+        foreach($request->user as $user){
             UserHasTodo::insert(
                 ['user_id' => $user, 'todo_id' => $id]
             );
+            $newNotification = new Mission(
+                'Cập nhật công việc',
+                route('todo-list.show', $updateTodo->id),
+                'far fa-list-alt'
+            );
+            $user = User::findOrFail($user);
+            $user->notify($newNotification);
         }  
 
         $updateTodo->save([

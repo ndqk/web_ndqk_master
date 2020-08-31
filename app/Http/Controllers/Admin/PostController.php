@@ -5,11 +5,12 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Http\Requests\{StorePostRequest,UpdatePostRequest};
-use Illuminate\Support\Facades\Auth;
-
-use App\Entity\{Post, Category, Image};
 use Yajra\Datatables\Datatables;
+
+use Illuminate\Support\Facades\Auth;
+use App\Entity\{Post, Category, Image};
+
+use App\Http\Requests\{StorePostRequest,UpdatePostRequest};
 
 class PostController extends Controller
 {
@@ -37,7 +38,7 @@ class PostController extends Controller
                     ->join('images', 'posts.id', 'images.post_id')
                     ->where('images.status', '0')
                     ->join('users', 'posts.user_id', 'users.id')
-                    ->select('posts.id', 'posts.title', 'categories.title', 'images.image', 'users.name', 'posts.status', 'posts.view');
+                    ->select('posts.id', 'posts.title', 'categories.title as category', 'images.image', 'users.name', 'posts.status', 'posts.view');
         
         return Datatables::of($post)->addColumn('action', function($post){
             //$string =  '<a href="">View</a>';

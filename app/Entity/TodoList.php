@@ -21,56 +21,36 @@ class TodoList extends Model
     }
     
     private function getRemainTime($deadline){
-        $deadline = new \DateTime($deadline);
-        $tmp = date('Y-m-d H:i:s');
-        $current = new \DateTime($tmp);
-                      
-        $timeRemain = $deadline->diff($current);
+        $now = new \DateTime();
+        $future_date = new \DateTime($deadline);
 
-        $formats = ['y', 'm', 'd', 'h', 'm'];
+        $interval = $future_date->diff($now);
+            
+        $formats = ['%y year secondary', '%m month secondary', '%a day primary', '%h hour info', '%i min danger', '%s second'];
 
-        foreach($formats as $format){
-            $time = $timeRemain->$format;
-            if($time){
-                switch($format){
-                    case 'y':
-                        $style = 'secondary';
-                        $ext = 'year';
-                        break;
-                    case 'm':
-                        $style = 'secondary';
-                        $ext = 'month';
-                        break;
-                    case 'd':
-                        $ext = 'day';
-                        if($time > 7){
-                            $style = 'primary';
-                        }
-                        else{
-                            if($time == 1){
-                                $style = 'warning';
-                            }
-                            else
-                                $style = 'success';
-                        }
-                        break;
-                    case 'h':
-                        $style = 'info';
-                        $ext = 'hour';
-                        break;
-                    case 'm':
-                        $style = 'danger';
-                        $ext = 'minute';
-                        break;
-                    default:
-                        break;
+        foreach($formats as $key=>$format){
+            $time = $interval->format($format);
+            //echo $time;
+            $ex = explode(' ', $time);
+            if((int)$ex[0] > 0){
+                $res = [
+                    'time' => (int)$ex[0],
+                    'ext' => $ex[1],
+                    'style' => $ex[2]
+                ];
+                if($key == 2){
+                    if((int)$ex[0] < 7)
+                        $res['style'] = 'success';
+                    if((int)$ex[0] == 1)
+                        $res['style'] = 'warning';
                 }
-            break;
+                if((int)$ex[0] > 1)
+                    $res['ext'] .= 's';
+                break;
             }
         }
-        if($time > 1) 
-            $ext  .= 's';
-        return (object)['time' => $time, 'style' => $style, 'ext' => $ext];
+
+        return (object)$res;
 
     }
 }

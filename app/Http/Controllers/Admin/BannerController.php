@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
 use App\Entity\{Banner};
 
+use App\Http\Requests\{StoreBannerRequest, UpdateBannerRequest};
+
 class BannerController extends Controller
 {
 
@@ -44,7 +46,7 @@ class BannerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreBannerRequest $request)
     {
         $createBanner = new Banner;
         $createBanner->title = $request->title;
@@ -90,7 +92,7 @@ class BannerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateBannerRequest $request, $id)
     {
         $upadteBanner = Banner::findOrFail($id);
 

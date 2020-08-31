@@ -1,11 +1,11 @@
 @extends('admin.layout.master')
 
 @section('titleHeader', 'Create Customer')
-@section('nameRoute', 'Crete Customer')
+@section('nameRoute', 'Customer / Create')
 
 
 @section('content')
-@include('partials.alert')
+
 <div class="card card-primary">
     <div class="card-header">
       <h3 class="card-title">Thêm mới tài khoản thành viên</h3>
@@ -17,23 +17,23 @@
       <div class="card-body">
         <div class="form-group">
             <label for="InputName">Tên chủ sở hữu *</label>
-            <input type="text" name="name" class="form-control" id="InputName" placeholder="Name" required>
+            <input type="text" name="name" class="form-control" id="InputName" placeholder="Name" >
         </div>
         <div class="form-group">
           <label for="InputEmail1">Email *</label>
-          <input type="email" name="email" class="form-control" id="InputEmail1" placeholder="Email" required>
+          <input type="email" name="email" class="form-control" id="InputEmail1" placeholder="Email" >
         </div>
         <div class="form-group">
           <label for="InputPassword1">Mật khẩu *</label>
-          <input type="password" name="password" class="form-control" id="InputPassword1" placeholder="Password" required>
+          <input type="password" name="password" class="form-control" id="InputPassword1" placeholder="Password" >
         </div>
         <div class="form-group">
             <label for="InputAddress">Địa chỉ *</label>
-            <input type="text" name="address" class="form-control" id="InputAddress" placeholder="Address" required>
+            <input type="text" name="address" class="form-control" id="InputAddress" placeholder="Address" >
         </div>
         <div class="form-group">
             <label for="InputPhone">Số điện thoại *</label>
-            <input type="text" name="phone" class="form-control" id="InputPhone" placeholder="Phone" required>
+            <input type="text" name="phone" class="form-control" id="InputPhone" placeholder="Phone" >
         </div>
         
       </div>

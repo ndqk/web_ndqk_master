@@ -1,10 +1,10 @@
 @extends('admin.layout.master')
 
 @section('titleHeader', 'Create User')
-@section('nameRoute', 'Create User')
+@section('nameRoute', 'User / Create')
 
 @section('content')
-@include('partials.alert')
+
 <div class="card card-primary">
     <div class="card-header">
       <h3 class="card-title">Thêm mới tài khoản quản trị</h3>

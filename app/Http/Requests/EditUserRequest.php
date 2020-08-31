@@ -32,5 +32,15 @@ class EditUserRequest extends FormRequest
         ];
     }
 
+    public function messages(){
+        return [
+            'name.required' => 'Tên không được để trống',
+            'email.required' => 'Email không được để trống',
+            'password.required' => 'Mật khẩu không được để trống',
+            'password.min' => 'Mật khẩu phải có ít nhất 6 ký tự',
+            'address.required' => 'Địa chỉ không được để trống',
+            'phone.required' => 'Số điện thoại không được để trống'
+        ];
+    }
    
 }

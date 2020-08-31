@@ -4,10 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Http\Requests\StoreRoleRequest;
+
 use DB;
+
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+
+use App\Http\Requests\StoreRoleRequest;
 
 class RoleController extends Controller
 {
@@ -49,7 +52,7 @@ class RoleController extends Controller
     {
         $role = Role::create(['name' => $request->input('name')]);
         $role->syncPermissions($request->input('permission'));
-        return redirect()->back();
+        return redirect()->back()->with('status', 'Thêm mới thành công');
     }
 
     /**
@@ -119,13 +122,8 @@ class RoleController extends Controller
 
         $role->syncPermissions($permissions);
 
-        return '<div class="alert alert-success alert-dismissible">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                    <h5>
-                        <i class="icon fas fa-check"></i>
-                        Cập nhật thành công
-                    </h5>
-                </div>';
+        return 'Cập nhật thành công';
+                
     }
 
     /**
@@ -136,6 +134,12 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $role_has_permisisons = DB::table('role_has_permissions')->where('role_id', $id);
+        $role_has_permisisons->delete();
+        $role = Role::findOrFail($id);
+
+        $role->delete();
+
+        return redirect()->back()->with('status','Xóa thành công');
     }
 }

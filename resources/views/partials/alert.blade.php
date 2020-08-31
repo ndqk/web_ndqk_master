@@ -1,15 +1,23 @@
-@if (session('status'))
-    <div class="alert alert-success alert-dismissible">
-        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-        <h5><i class="icon fas fa-check"></i>{{session('status')}}</h5>
-    </div>
+@if(session()->has('status'))
+  <script>
+    $(window).bind("load", function() {
+      toastr.options.timeOut = 2000;
+      toastr.options.closeButton = true;
+      toastr.success('{{session('status')}}');
+    });
+  </script>
 @endif
-
 @if ($errors->any())
-    @foreach ($errors->all() as $error)
-        <div class="alert alert-danger alert-dismissible">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-            <h5><i class="icon fas fa-ban"></i> {{ $error }}</h5>
-        </div>
-    @endforeach
+  <script>
+      $(window).bind("load", function() {
+        @foreach ($errors->all() as $error)
+          toastr.options.closeButton = true;
+          // toastr.options.showEasing = 'easeOutBounce';
+          toastr.options.hideMethod = 'slideUp';
+          toastr.options.timeOut = 2000;
+          toastr.options.preventDuplicates = true;
+          toastr.error('{{ $error }}');
+        @endforeach
+      });
+  </script>
 @endif

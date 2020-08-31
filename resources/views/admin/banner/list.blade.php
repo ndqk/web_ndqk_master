@@ -1,10 +1,10 @@
 @extends('admin.layout.master')
 
 @section('titleHeader', 'List Banner')
-@section('nameRoute', 'List Banner')
+@section('nameRoute', 'Banner')
 
 @section('content')
-@include('partials.alert')
+
 <div class="card card-primary">
     <div class="card-header">
       <h3 class="card-title">List Banner</h3>

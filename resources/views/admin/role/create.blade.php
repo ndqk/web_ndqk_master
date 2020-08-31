@@ -1,10 +1,10 @@
 @extends('admin.layout.master')
 
 @section('titleHeader', 'Create Role')
-@section('nameRoute', 'Create Role')
+@section('nameRoute', 'Role / Create')
 
 @section('content')
-@include('partials.alert')
+
 <div class="card card-primary">
     <div class="card-header">
       <h3 class="card-title">Create Role</h3>

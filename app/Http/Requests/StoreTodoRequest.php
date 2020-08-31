@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreRoleRequest extends FormRequest
+class StoreTodoRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,13 +24,19 @@ class StoreRoleRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string'
+            'title' => 'required',
+            'date' => 'required',
+            'user' => 'required',
+            'content' => 'required'
         ];
     }
 
     public function messages(){
         return [
-            'name.required' => 'Tên Role không được để trống'
+            'title.required' => 'Title không được bỏ trống',
+            'date.required' => 'Deadline không được bỏ trống',
+            'user.required' => 'Phải có ít nhất 1 người thực hiện',
+            'content.required' => 'Nội dung việc không được bỏ trống'
         ];
     }
 }

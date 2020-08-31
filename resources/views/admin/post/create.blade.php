@@ -1,14 +1,14 @@
 @extends('admin.layout.master')
 
-@section('titleHeader', 'Create product')
-@section('nameRoute', 'Product / Create')
+@section('titleHeader', 'Create post')
+@section('nameRoute', 'Post / Create')
 
 @section('css')
     <link rel="stylesheet" href="{{asset('site/css/preview.css')}}">
 @endsection
 
 @section('content')
-@include('partials.alert')
+
 <div class="card card-primary">
     <div class="card-header">
       <h3 class="card-title">Thêm mới bài viết</h3>

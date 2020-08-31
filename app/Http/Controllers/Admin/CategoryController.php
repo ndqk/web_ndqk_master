@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+
 use App\Entity\Category;
 use Spatie\Permission\Models\Permission;
+
 use App\Http\Requests\CreateCateRequest;
 
 class CategoryController extends Controller

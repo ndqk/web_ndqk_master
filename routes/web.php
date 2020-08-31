@@ -26,6 +26,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['che
     Route::get('/', 'AdminController@home')->name('admin.home');
     //role
     Route::resource('role', 'RoleController');
+    Route::get('role/delete/{id}', ['as' => 'role.delete', 'uses' => 'RoleController@destroy']);
 
     //category
     Route::resource('category', 'CategoryController');
@@ -45,6 +46,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['che
     Route::resource('user', 'UserController');
     Route::get('/user-list', 'UserController@getList')->name('user.list');
     Route::get('user/delete/{id}', ['as' => 'user.delete', 'uses' => 'UserController@destroy']);
+    Route::post('user/permission/update/{id}', 'UserController@updatePermisson')->name('user.permission.update');
     
     //customer
     Route::resource('customer', 'CustomerController');
@@ -57,6 +59,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['che
 
     //todo-list
     Route::resource('todo-list', 'TodolistController');
+    Route::get('/todo-list-list', 'TodolistController@getTodo')->name('todo-list.list');
     Route::group(['prefix' => 'todo-list'], function () {
         Route::get('delete/{id}', ['as' => 'todo-list.delete', 'uses' => 'TodolistController@destroy']);
         Route::group(['prefix' => 'approve'], function () {
@@ -83,6 +86,13 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['che
 
     //mail
     Route::resource('mail', 'MailController');
+
+    //setting
+    Route::group(['prefix' => 'setting'], function () {
+        Route::get('/', 'SettingController@index')->name('setting.index');
+        Route::post('/change-info', 'SettingController@changeInfo')->name('setting.change-info');
+        Route::post('/change-password', 'SettingController@changePassword')->name('setting.change-password');
+    });
 });
 
 Route::group(['prefix' => '/', 'namespace' => 'Site'], function () {

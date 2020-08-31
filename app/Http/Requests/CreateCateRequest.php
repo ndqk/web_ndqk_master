@@ -27,4 +27,10 @@ class CreateCateRequest extends FormRequest
             'title' => 'required|string'
         ];
     }
+
+    public function messages(){
+        return [
+            'title.required' => 'Title không được để trống'
+        ];
+    }
 }

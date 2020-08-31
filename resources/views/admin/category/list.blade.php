@@ -1,7 +1,7 @@
 @extends('admin.layout.master')
 
 @section('titleHeader', 'List Category')
-@section('nameRoute', 'List Category')
+@section('nameRoute', 'Category')
 
 @section('content')
 <div class="container-fluid">
@@ -38,7 +38,7 @@
             </div>
         </div>
         <div class="col-md-5">
-            @include('partials.alert')
+            
             <div class="card card-primary">
                 <div class="card-header">
                     <h3 class="card-title">Create new category</h3>
@@ -50,7 +50,7 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label for="exampleInputPassword1">Title *</label>
-                            <input type="text" name="title" class="form-control"  placeholder="Enter title" value="" required>
+                            <input type="text" name="title" class="form-control"  placeholder="Enter title" value="">
                         </div>
                     </div>
   

@@ -90,8 +90,11 @@
         <div class="card-body">
           <ul class="todo-list" data-widget="todo-list">
             @if ($todoList)
+                @php
+                    $currentDate = date('Y-m-d H:i:s');
+                @endphp
                 @foreach ($todoList as $item)
-                  <li>
+                  <li class="{{$item->deadline < $currentDate ? 'done' : ''}}">
                     <!-- drag handle -->
                     <span class="handle">
                       <i class="fas fa-ellipsis-v"></i>
@@ -99,24 +102,26 @@
                     </span>
 
                     <!-- checkbox -->
-                    <div  class="icheck-primary d-inline ml-2">
-                      <input type="checkbox" value="{{$item->id}}" name="todo[]" class="todos" id="todoCheck{{$item->id}}" {{$item->status ? 'checked' : ''}}>
+                    <div class="icheck-primary d-inline ml-2">
+                      <input type="checkbox" value="{{$item->id}}" name="todo[]" class="todos" id="todoCheck{{$item->id}}" {{$item->status ? 'checked' : ''}}
+                      {{$item->deadline < $currentDate ? 'disabled' : ''}}
+                      >
                       <label for="todoCheck{{$item->id}}"></label>
                     </div>
                     <!-- todo text -->
                     <label for="todoCheck{{$item->id}}" class="text">{{$item->title}}</label>
                     
                     <!-- Emphasis label -->
-                    
-                    <small class="badge badge-{{$item->time_remain->style}}">
-                      <i class="far fa-clock"> </i>
-                      {{$item->time_remain->time .' '. $item->time_remain->ext}}
-                    </small>
+                    @if ($item->deadline > $currentDate)
+                      <small class="badge badge-{{$item->time_remain->style}}">
+                        <i class="far fa-clock"> </i>
+                        {{$item->time_remain->time .' '. $item->time_remain->ext}}
+                      </small>
+                      <span id="{{$item->id}}">{{$item->status ? 'Approving ... ' : ''}}</span>
+                    @else
+                      <span>( Out of date: {{$item->time_remain->time . ' ' . $item->time_remain->ext}})</span>
+                    @endif
                     <!-- General tools such as edit or delete-->
-                    @php
-                        $user = \Illuminate\Support\Facades\Auth::user();
-                    @endphp
-                    <span id="{{$item->id}}">{{$item->status ? 'Approving ... ' : ''}}</span>
 
                     <div class="tools">
 
@@ -139,11 +144,12 @@
           </ul>
         </div>
         <!-- /.card-body -->
-        @if ($user->can('todo-create'))
-        <div class="card-footer clearfix">
-          <a href="{{route('todo-list.create')}}" class="btn btn-info float-right"><i class="fas fa-plus"></i> Add item</a>
-        </div>
-        @endif
+
+        @can('todo-create'))
+          <div class="card-footer clearfix">
+            <a href="{{route('todo-list.create')}}" class="btn btn-info float-right"><i class="fas fa-plus"></i> Add item</a>
+          </div>
+        @endcan
       </div>
       <!-- /.card -->
     </section>
@@ -151,7 +157,7 @@
 
 
     <!-- right col (We are only adding the ID to make the widgets sortable)-->
-    <section class="col-lg-5 connectedSortable">
+    {{-- <section class="col-lg-5 connectedSortable">
 
       <!-- Map card -->
       <div class="card bg-gradient-primary">
@@ -243,7 +249,7 @@
         <!-- /.card-body -->
       </div>
       <!-- /.card -->
-    </section>
+    </section> --}}
     <!-- right col -->
   </div>
   <!-- /.row (main row) -->

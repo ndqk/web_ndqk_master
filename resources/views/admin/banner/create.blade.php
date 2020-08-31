@@ -1,10 +1,10 @@
 @extends('admin.layout.master')
 
 @section('titleHeader', 'Create Banner')
-@section('nameRoute', 'Create Banner')
+@section('nameRoute', 'Banner / Create')
 
 @section('content')
-@include('partials.alert')
+
 <div class="card card-primary">
     <div class="card-header">
       <h3 class="card-title">Create Banner</h3>
@@ -26,7 +26,7 @@
                 <div class="col-sm-6">
                     <!-- text input -->
                     <div class="form-group">
-                    <label>Link</label>
+                    <label>Link*</label>
                     <input type="text" class="form-control" placeholder="Enter ..." name="link">
                     </div>
                 </div>

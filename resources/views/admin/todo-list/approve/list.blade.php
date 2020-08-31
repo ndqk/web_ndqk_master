@@ -1,10 +1,10 @@
 @extends('admin.layout.master')
 
 @section('titleHeader', 'To do list Approve')
-@section('nameRoute', 'To-do-list Approve')
+@section('nameRoute', 'To-do-list / Approve')
 
 @section('content')
-@include('partials.alert')
+
 <div class="card card-primary">
     <div class="card-header">
       <h3 class="card-title">To do List Approve</h3>

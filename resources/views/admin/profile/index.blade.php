@@ -58,7 +58,7 @@
             <!-- /.card -->
         </div>
         <div class="col-md-7">
-            @include('partials.alert')
+            
             <div class="card card-primary">
                 <div class="card-header">
                     <h3 class="card-title">SETTING</h3>

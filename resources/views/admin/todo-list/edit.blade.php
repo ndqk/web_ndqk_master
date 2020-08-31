@@ -8,7 +8,7 @@
 @endsection
 
 @section('content')
-@include('partials.alert')
+
 <div class="card card-primary">
     <div class="card-header">
       <h3 class="card-title">Chỉnh sửa bài viết</h3>
@@ -21,12 +21,12 @@
       <div class="card-body">
         <div class="form-group">
             <label for="InputName">Title *</label>
-            <input type="text" name="title" id="InputName" class="form-control" placeholder="Title" autocomplete="off" required
+            <input type="text" name="title" id="InputName" class="form-control" placeholder="Title" autocomplete="off" 
             value="{{$editTodo->title ? $editTodo->title : ''}}">
         </div>
         <div class="form-group">
             <label for="InputDate">Deadline *</label>
-            <input type="date" name="date" id="InputDate" class="form-control" placeholder="Date" required
+            <input type="date" name="date" id="InputDate" class="form-control" placeholder="Date" 
             value="{{$editTodo->deadline ? $editTodo->deadline : ''}}">
         </div>
         <div class="form-group">
@@ -35,7 +35,7 @@
                 @foreach ($users as $user)
                     
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="{{$user->id}}" id="{{$user->id}}" name="users[]"
+                    <input class="form-check-input" type="checkbox" value="{{$user->id}}" id="{{$user->id}}" name="user[]"
                     {{in_array($user->id, $userChecked) ? 'checked' : ''}}>
                     <label class="form-check-label">{{$user->name}}</label>
                 </div>

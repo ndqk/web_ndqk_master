@@ -1,7 +1,7 @@
 @extends('admin.layout.master')
 
 @section('titleHeader', 'List Role')
-@section('nameRoute', 'List Role')
+@section('nameRoute', 'Role')
 
 @section('content')
 <div class="card card-primary">
@@ -27,9 +27,10 @@
                         <td>{{$role->name}}</td>
                         <td>{{$role->id}}</td>
                         <td>
-                            <button type="button"  class="btn btn-primary edit-role-btn" data-link="{{route('role.show', $role->id)}}" data-toggle="modal" data-target="#modal-lg">
+                            <a href="#" class="btn btn-primary edit-role-btn" data-link="{{route('role.show', $role->id)}}" data-toggle="modal" data-target="#modal-lg">
                                 Detail
-                            </button>
+                            </a>
+                            <a href="{{route('role.delete', $role->id)}}">Delete</a>
                         </td>
                     </tr>
                 @endforeach
@@ -105,7 +106,8 @@
         url : url,
         data : data,
         success : function (respone){
-          $('#alert-edit-role').html(respone);
+          toastr.options.timeOut = 2000;
+          toastr.success(respone);
         },
         error : function(error){
 
