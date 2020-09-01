@@ -16,7 +16,7 @@ class AdminController extends Controller
         $countPost = Post::count();
         $countCustomer = User::join('model_has_roles', 'users.id', 'model_has_roles.model_id')
                         ->join('roles', 'roles.id', 'model_has_roles.role_id')
-                        ->where('roles.name', 'Admin')->count();
+                        ->where('roles.name', 'Customer')->count();
 
         $currentUser = Auth::user();
         if($currentUser->can(['todo-create', 'todo-edit', 'todo-delete'])){
