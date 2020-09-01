@@ -76,9 +76,9 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['che
         Route::get('list', 'NotificationController@listNotifications')->name('notification.list');
         Route::get('detail/{id}', 'NotificationController@detail')->name('notification.detail');
     });
-    Route::get('/test', function(){
-        $user = User::findOrFail(9);
-        $title = Str::random(10);
+    Route::get('/test/{id}', function($id){
+        $user = User::findOrFail($id);
+        $title = "Đây là thông báo";
         $link = 'https://www.youtube.com/watch?v=RlBkvjVss-s';
         $icon = 'far fa-list-alt';
         $user->notify(new Mission($title, $link, $icon));
