@@ -74,7 +74,7 @@ class TodolistController extends Controller
         $todoList = [
             'title' => $request->title,
             'content' => $request->content,
-            'deadline' => $request->date,
+            'deadline' => $request->date . ' 0:0:0',
             'user_id' => Auth::user()->id,
             'status' => 0,
         ];

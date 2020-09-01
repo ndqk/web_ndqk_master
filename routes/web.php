@@ -81,7 +81,11 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['che
         $title = "Đây là thông báo";
         $link = 'https://www.youtube.com/watch?v=RlBkvjVss-s';
         $icon = 'far fa-list-alt';
-        $user->notify(new Mission($title, $link, $icon));
+        $user->notify(new Mission([
+            'title' => $title, 
+            'link' => $link, 
+            'icon' => $icon
+        ]));
     });
 
     //mail
