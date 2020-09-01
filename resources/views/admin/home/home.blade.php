@@ -144,8 +144,8 @@
           </ul>
         </div>
         <!-- /.card-body -->
-
-        @can('todo-create'))
+        
+        @can('todo-create')
           <div class="card-footer clearfix">
             <a href="{{route('todo-list.create')}}" class="btn btn-info float-right"><i class="fas fa-plus"></i> Add item</a>
           </div>

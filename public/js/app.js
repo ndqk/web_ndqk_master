@@ -25414,8 +25414,8 @@ window.Echo["private"]('App.Entity.User.' + userId).notification(function (notif
   var data = [];
   $('.notification-item').each(function () {
     data.push($('<div>').append($(this).clone()).html());
-  });
-  console.log(notification);
+  }); //console.log(notification);
+
   var newNotification = "\n                        <div class=\"notification-item un-read-notification\">\n                            <div class=\"dropdown-divider\"></div>\n                            <a href=\"/admin/notification/detail/".concat(notification.id, "\" class=\"dropdown-item\">\n                                <i class=\"").concat(notification.icon, " mr-2\"></i> ").concat(notification.title, "\n                                <span class=\"float-right text-muted text-sm\">now</span>\n                            </a>\n                        </div>");
   data.unshift(newNotification);
   if (data.length > 5) data.pop();

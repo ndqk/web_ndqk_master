@@ -18,7 +18,7 @@ window.Echo.private('App.Entity.User.' + userId)
                 $('.notification-item').each(function(){
                     data.push($('<div>').append($(this).clone()).html());
                 });
-                console.log(notification);
+                //console.log(notification);
                 
                 let newNotification = `
                         <div class="notification-item un-read-notification">
