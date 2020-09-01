@@ -13,15 +13,15 @@ class TodoListPermissionSeeder extends Seeder
     public function run()
     {
         $permissions = [
-            // 'todo-list', 
-            // 'todo-create', 
-            // 'todo-edit', 
-            // 'todo-delete',
-            //'todo-detail'
-            'todo-approve-send',
-            'todo-approve-list',
-            'todo-approve-check',
-            'todo-approve-delete',
+            'todo-list', 
+            'todo-create', 
+            'todo-edit', 
+            'todo-delete',
+            'todo-detail',
+            // 'todo-approve-send',
+            // 'todo-approve-list',
+            // 'todo-approve-check',
+            // 'todo-approve-delete',
         ];
 
         foreach($permissions as $permission){
