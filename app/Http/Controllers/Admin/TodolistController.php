@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Permission;
 
 use Illuminate\Support\Facades\Auth;
 use App\Entity\{User, TodoList, UserHasTodo};
@@ -85,14 +86,13 @@ class TodolistController extends Controller
             UserHasTodo::insert(
                 ['user_id' => $user, 'todo_id' => $storeTodo->id]
             );
-            $newNotification = new Mission(
-                'Bạn được thêm vào 1 công việc',
-                route('todo-list.show', $storeTodo->id),
-                'far fa-list-alt'
-            );
-            $user = User::findOrFail($user);
-            $user->notify($newNotification);
-        }     
+        }   
+        $receivers = User::whereIn('id', $users)->get();
+        $this->sendNotification($receivers, [
+            'title' => 'Bạn được thêm vào 1 công việc',
+            'link' => route('todo-list.show', $storeTodo->id),
+            'icon' => 'far fa-list-alt'
+        ]);
 
         return redirect()->back()->with('status', 'Thêm thành công');
     }
@@ -140,14 +140,13 @@ class TodolistController extends Controller
             UserHasTodo::insert(
                 ['user_id' => $user, 'todo_id' => $id]
             );
-            $newNotification = new Mission(
-                'Cập nhật công việc',
-                route('todo-list.show', $updateTodo->id),
-                'far fa-list-alt'
-            );
-            $user = User::findOrFail($user);
-            $user->notify($newNotification);
         }  
+        $receivers = User::whereIn('id', $request->user)->get();
+        $this->sendNotification($receivers, [
+            'title' => 'Cập nhật công việc',
+            'link' => route('todo-list.show', $updateTodo->id),
+            'icon' => 'far fa-list-alt'
+        ]);
 
         $updateTodo->save([
             'title' => $request->title,
@@ -178,6 +177,16 @@ class TodolistController extends Controller
         $approveTodo = TodoList::findOrFail($id);
         $approveTodo->status = !$approveTodo->status;
         $approveTodo->save();
+
+        if($approveTodo->status){
+            $users_can_approve = User::permission('todo-approve-list', 'todo-approve-check', 'todo-approve-delete')->get();
+        
+            $this->sendNotification($users_can_approve, [
+                'title' => 'Yêu cầu duyệt công việc',
+                'link' => route('todo-list.approve.list'),
+                'icon' => 'far fa-list-alt'
+            ]);
+        }
 
         if($approveTodo->status)
             return 'Approving ...';
@@ -216,5 +225,12 @@ class TodolistController extends Controller
         $deleteApprove->save();
 
         return redirect()->back()->with('status', 'Xóa thành công');
+    }
+
+    private function sendNotification($receivers, $notification){
+        foreach($receivers as $receiver){
+            $newNotification = new Mission($notification);
+            $receiver->notify($newNotification);
+        }  
     }
 }

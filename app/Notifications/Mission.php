@@ -19,13 +19,11 @@ class Mission extends Notification
      * @return void
      * 
      */
-    protected $data, $link, $icon;
+    protected $data;
 
-    public function __construct($data, $link, $icon)
+    public function __construct($data)
     {
         $this->data = $data;
-        $this->link = $link;
-        $this->icon = $icon;
     }
 
     /**
@@ -61,19 +59,11 @@ class Mission extends Notification
      */
     public function toArray($notifiable)
     {
-        return [
-            'title' => $this->data,
-            'link' => $this->link,
-            'icon' => $this->icon
-        ];
+        return $this->data;
     }
 
     public function toBroadcast($notifiable){
-        return new BroadcastMessage([
-            'title' => $this->data,
-            'link' => $this->link,
-            'icon' => $this->icon
-        ]);
+        return new BroadcastMessage($this->data);
     }
 
     public function broadcastType(){
