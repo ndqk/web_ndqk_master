@@ -18,10 +18,10 @@ class TodoListPermissionSeeder extends Seeder
             'todo-edit', 
             'todo-delete',
             'todo-detail',
-            // 'todo-approve-send',
-            // 'todo-approve-list',
-            // 'todo-approve-check',
-            // 'todo-approve-delete',
+            'todo-approve-send',
+            'todo-approve-list',
+            'todo-approve-check',
+            'todo-approve-delete',
         ];
 
         foreach($permissions as $permission){
