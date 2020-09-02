@@ -37,6 +37,11 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['che
     Route::get('/post-list', 'PostController@getList')->name('post.list');
     Route::get('/post/delete/{id}', ['as' => 'post.delete', 'uses' => 'PostController@destroy']);
 
+    //product
+    Route::resource('product', 'ProductController');
+    Route::get('/product-list', 'ProductController@getList')->name('product.list');
+    Route::get('/product/delete/{id}', ['as' => 'product.delete', 'uses' => 'ProductController@destroy']);
+
     //profile
     Route::group(['prefix' => 'profile'], function () {
         Route::get('/', 'ProfileController@index')->name('profile.index');
@@ -106,8 +111,8 @@ Route::group(['prefix' => '/', 'namespace' => 'Site'], function () {
         return view('site.category.category');
     })->name('site.category');
 
-    Route::get('blog-image', function () {
-        return 'blog image';
+    Route::get('blog', function () {
+        return view('site.blog.index');
     })->name('site.blog');
 
     Route::get('about', function () {

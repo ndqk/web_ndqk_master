@@ -48,11 +48,16 @@ class CategoryController extends Controller
     public function store(CreateCateRequest $request)
     {
         $cateData = [
-            'title' => $request->input('title'),
+            'title' => $request->title,
+            'parent' => $request->parent,
             'status' => 0
         ];
         $category = new Category($cateData);
-        $category->save();
+        try{
+            $category->save();
+        }catch(\Exception $e){
+            return redirect()->back()->withErrors(['Không thể thêm mới category này']);
+        }
         return redirect()->back()->with('status', 'Thêm mới thành công');
     }
 

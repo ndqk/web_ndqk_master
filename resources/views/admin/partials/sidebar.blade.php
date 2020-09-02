@@ -62,6 +62,35 @@
               </ul>
             </li>  
           @endcan
+
+          @can('product-list')
+          <li class="nav-item has-treeview {{request()->routeIs('product*') ? 'menu-open' : ''}}">
+            <a href="{{asset('#')}}" class="nav-link {{request()->routeIs('product*') ? 'active' : ''}}">
+              <i class="nav-icon fas fa-tshirt"></i>
+              <p>
+                Quản lý sản phẩm
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{route('product.index')}}" class="nav-link {{request()->routeIs('product.index') ? 'active' : ''}}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Danh sách sản phẩm</p>
+                </a>
+              </li>
+              @can('product-create')
+                <li class="nav-item">
+                  <a href="{{route('product.create')}}" class="nav-link {{request()->routeIs('product.create') ? 'active' : ''}}">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Thêm mới sản phẩm</p>
+                  </a>
+                </li>
+              @endcan
+            </ul>
+          </li>
+          @endcan
+          
           @can('post-list')
           <li class="nav-item has-treeview {{request()->routeIs('post*') ? 'menu-open' : ''}}">
             <a href="{{asset('#')}}" class="nav-link {{request()->routeIs('post*') ? 'active' : ''}}">
@@ -89,7 +118,8 @@
             </ul>
           </li>
           @endcan
-
+          
+          {{-- // --}}
           <li class="nav-header">QUẢN LÝ TÀI KHOẢN</li>
 
           @can('role-list')

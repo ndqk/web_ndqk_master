@@ -1,81 +1,78 @@
-<!-- s-footer
-    ================================================== -->
-    <footer class="s-footer">
-
-        <div class="s-footer__main">
-            <div class="row">
-                
-                <div class="col-six tab-full s-footer__about">
-                        
-                    <h4>About Wordsmith</h4>
-
-                    <p>Fugiat quas eveniet voluptatem natus. Placeat error temporibus magnam sunt optio aliquam. Ut ut occaecati placeat at. 
-                    Fuga fugit ea autem. Dignissimos voluptate repellat occaecati minima dignissimos mollitia consequatur.
-                    Sit vel delectus amet officiis repudiandae est voluptatem. Tempora maxime provident nisi et fuga et enim exercitationem ipsam. Culpa error 
-                    temporibus magnam est voluptatem.</p>
-
-                </div> <!-- end s-footer__about -->
-
-                <div class="col-six tab-full s-footer__subscribe">
-                        
-                    <h4>Our Newsletter</h4>
-
-                    <p>Sit vel delectus amet officiis repudiandae est voluptatem. Tempora maxime provident nisi et fuga et enim exercitationem ipsam. Culpa consequatur occaecati.</p>
-
-                    <div class="subscribe-form">
-                        <form id="mc-form" class="group" novalidate="true">
-
-                            <input type="email" value="" name="EMAIL" class="email" id="mc-email" placeholder="Email Address" required="">
-                
-                            <input type="submit" name="subscribe" value="Send">
-                
-                            <label for="mc-email" class="subscribe-message"></label>
-                
-                        </form>
+<!-- ##### Footer Area Start ##### -->
+<footer class="footer_area clearfix">
+    <div class="container">
+        <div class="row">
+            <!-- Single Widget Area -->
+            <div class="col-12 col-md-6">
+                <div class="single_widget_area d-flex mb-30">
+                    <!-- Logo -->
+                    <div class="footer-logo mr-50">
+                        <a href="{{route('site.home')}}"><img src="{{asset('site/img/core-img/logo2.png')}}" alt=""></a>
                     </div>
-
-                </div> <!-- end s-footer__subscribe -->
-
+                    <!-- Footer Menu -->
+                    <div class="footer_menu">
+                        <ul>
+                            <li><a href="{{asset('site/shop.html')}}">Shop</a></li>
+                            <li><a href="{{route('site.blog')}}">Blog</a></li>
+                            <li><a href="{{route('site.contact')}}">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-        </div> <!-- end s-footer__main -->
-
-        <div class="s-footer__bottom">
-            <div class="row">
-
-                <div class="col-six">
-                    <ul class="footer-social">
-                        <li>
-                            <a href="{{asset('site/#0')}}"><i class="fab fa-facebook"></i></a>
-                        </li>
-                        <li>
-                            <a href="{{asset('site/#0')}}"><i class="fab fa-twitter"></i></a>
-                        </li>
-                        <li>
-                            <a href="{{asset('site/#0')}}"><i class="fab fa-instagram"></i></a>
-                        </li>
-                        <li>
-                            <a href="{{asset('site/#0')}}"><i class="fab fa-youtube"></i></a>
-                        </li>
-                        <li>
-                            <a href="{{asset('site/#0')}}"><i class="fab fa-pinterest"></i></a>
-                        </li>
+            <!-- Single Widget Area -->
+            <div class="col-12 col-md-6">
+                <div class="single_widget_area mb-30">
+                    <ul class="footer_widget_menu">
+                        <li><a href="{{asset('site/#')}}">Order Status</a></li>
+                        <li><a href="{{asset('site/#')}}">Payment Options</a></li>
+                        <li><a href="{{asset('site/#')}}">Shipping and Delivery</a></li>
+                        <li><a href="{{asset('site/#')}}">Guides</a></li>
+                        <li><a href="{{asset('site/#')}}">Privacy Policy</a></li>
+                        <li><a href="{{asset('site/#')}}">Terms of Use</a></li>
                     </ul>
                 </div>
-
-                <div class="col-six">
-                    <div class="s-footer__copyright">
-                        <span><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="{{asset('site/https://colorlib.com')}}" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-</span>
-                    </div>
-                </div>
-                
             </div>
-        </div> <!-- end s-footer__bottom -->
-
-        <div class="go-top">
-            <a class="smoothscroll" title="Back to Top" href="{{asset('site/#top')}}"></a>
         </div>
 
-    </footer> <!-- end s-footer -->
+        <div class="row align-items-end">
+            <!-- Single Widget Area -->
+            <div class="col-12 col-md-6">
+                <div class="single_widget_area">
+                    <div class="footer_heading mb-30">
+                        <h6>Subscribe</h6>
+                    </div>
+                    <div class="subscribtion_form">
+                        <form action="#" method="post">
+                            <input type="email" name="mail" class="mail" placeholder="Your email here">
+                            <button type="submit" class="submit"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- Single Widget Area -->
+            <div class="col-12 col-md-6">
+                <div class="single_widget_area">
+                    <div class="footer_social_area">
+                        <a href="{{asset('#')}}" data-toggle="tooltip" data-placement="top" title="Facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                        <a href="{{asset('#')}}" data-toggle="tooltip" data-placement="top" title="Instagram"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                        <a href="{{asset('#')}}" data-toggle="tooltip" data-placement="top" title="Twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                        <a href="{{asset('#')}}" data-toggle="tooltip" data-placement="top" title="Pinterest"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
+                        <a href="{{asset('#')}}" data-toggle="tooltip" data-placement="top" title="Youtube"><i class="fa fa-youtube-play" aria-hidden="true"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+<div class="row mt-5">
+            <div class="col-md-12 text-center">
+                <p>
+                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="{{asset('site/https://colorlib.com')}}" target="_blank">Colorlib</a>
+<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                </p>
+            </div>
+        </div>
+
+    </div>
+</footer>
+<!-- ##### Footer Area End ##### -->

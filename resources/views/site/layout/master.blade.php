@@ -1,63 +1,55 @@
 <!DOCTYPE html>
-<html class="no-js" lang="en">
+<html lang="en">
+
 <head>
-
-    <!--- basic page needs
-    ================================================== -->
-    <meta charset="utf-8">
-    <title>Wordsmith</title>
+    <meta charset="UTF-8">
     <meta name="description" content="">
-    <meta name="author" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-    <!-- mobile specific metas
-    ================================================== -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!-- Title  -->
+    <title>Essence - Fashion Ecommerce Template</title>
 
-    <!-- CSS
-    ================================================== -->
-    <link rel="stylesheet" href="{{asset('site/css/base.css')}}">
-    <link rel="stylesheet" href="{{asset('site/css/vendor.css')}}">
-    <link rel="stylesheet" href="{{asset('site/css/main.css')}}">
+    <!-- Favicon  -->
+    <link rel="icon" href="{{asset('site/img/core-img/favicon.ico')}}">
 
-    <!-- script
-    ================================================== -->
-    <script src="{{asset('site/js/modernizr.js')}}"></script>
+    <!-- Core Style CSS -->
+    <link rel="stylesheet" href="{{asset('site/css/core-style.css')}}">
+    <link rel="stylesheet" href="{{asset('site/style.css')}}">
 
-    <!-- favicons
-    ================================================== -->
-    <link rel="shortcut icon" href="{{asset('site/favicon.ico')}}" type="image/x-icon">
-    <link rel="icon" href="{{asset('site/favicon.ico')}}" type="image/x-icon">
+    @yield('css')
 
 </head>
 
-<body id="top">
-
-    {{-- <!-- preloader
-    ================================================== -->
-    <div id="preloader">
-        <div id="loader" class="dots-fade">
-            <div></div>
-            <div></div>
-            <div></div>
-        </div>
-    </div> --}}
-
-    @include('site.partials.header')
-
+<body>
+    @include('site.partials.navbar')
+    
     @section('content')
         
     @show
-
-
-    @include('site.partials.popular')
+    
     @include('site.partials.footer')
 
-
-    <!-- Java Script
-    ================================================== -->
-    <script src="{{asset('site/js/jquery-3.2.1.min.js')}}"></script>
+    <!-- jQuery (Necessary for All JavaScript Plugins) -->
+    <script src="{{asset('site/js/jquery/jquery-2.2.4.min.js')}}"></script>
+    <!-- Popper js -->
+    <script src="{{asset('site/js/popper.min.js')}}"></script>
+    <!-- Bootstrap js -->
+    <script src="{{asset('site/js/bootstrap.min.js')}}"></script>
+    <!-- Plugins js -->
     <script src="{{asset('site/js/plugins.js')}}"></script>
-    <script src="{{asset('site/js/main.js')}}"></script>
+    <!-- Classy Nav js -->
+    <script src="{{asset('site/js/classy-nav.min.js')}}"></script>
+    <!-- Active js -->
+    {{-- <script src="{{asset('site/js/active.js')}}"></script>
+    <!-- Google Maps --> --}}
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAwuyLRa1uKNtbgx6xAJVmWy-zADgegA2s"></script>
+    <!-- Active js -->
+    <script src="{{asset('site/js/active.js')}}"></script>
+
+    @yield('js')
+    @yield('script')
 
 </body>
 

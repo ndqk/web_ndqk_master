@@ -13,7 +13,7 @@
                     <h3 class="card-title">List category</h3>
                 </div>
                 <div class="card-body">
-                    <ul class="tree-view">
+                    {{-- <ul class="tree-view">
                         @if (sizeof($categories))
                             @foreach ($categories as $category)
                                 <li >
@@ -25,15 +25,36 @@
                                     <a href="{{route('category.delete', $category->id)}}" data-method="DELETE">
                                         <i class="fas fa-trash-alt"></i>
                                     </a>
-                                    <a href="">
+                                    <a class="create-new-category" href="#" data-id={{$category->id}} data-title = {{$category->title}}>
                                         <i class="fas fa-plus"></i>
                                     </a>
+                                    <ul class="tree-view">
+                                        <li >
+                                            <span>abc</span>
+                                                    &ensp;
+                                            <a href="" data-toggle="modal" data-target="#modal-default" class="category-edit" >
+                                                <i class="fas fa-pencil-alt"></i>
+                                            </a>
+                                            <a href="">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </a>
+                                            <a href="#" >
+                                                <i class="fas fa-plus"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
                                 </li>
                             @endforeach
                         @else
                             <p>Không có danh mục nào</p>
                         @endif
-                    </ul>
+                    </ul> --}}
+                    @php
+                        if(sizeof($categories))
+                            \App\Entity\Category::showCategories($categories, 0);
+                        else
+                            echo '<p>Không có danh mục nào</p>';
+                    @endphp
                 </div>  
             </div>
         </div>
@@ -41,11 +62,11 @@
             
             <div class="card card-primary">
                 <div class="card-header">
-                    <h3 class="card-title">Create new category</h3>
+                    <h3 id="form-create-title" class="card-title">Create new category</h3>
                 </div>
                   <!-- /.card-header -->
                   <!-- form start -->
-                <form role="form" method="post" action="{{route('category.store')}}">
+                <form id="form-create" role="form" method="post" action="{{route('category.store')}}">
                     @csrf
                     <div class="card-body">
                         <div class="form-group">
@@ -53,9 +74,10 @@
                             <input type="text" name="title" class="form-control"  placeholder="Enter title" value="">
                         </div>
                     </div>
-  
+                    <input type="hidden"  name="parent" value="0"/>
                     <div class="card-footer">
                         <button type="submit" class="btn btn-primary">Create</button>
+                        <button type="button" id="create-category-default" class="btn btn-secondary">Create Category</button>
                     </div>
                 </form>
             </div>
@@ -100,6 +122,7 @@
             $('.ndqk-closde-modal').click(function(){
                 location.reload();
             });
+
             $('.category-edit').click(function(){
                 let url = $(this).data('link');
                 $.ajax({
@@ -111,6 +134,7 @@
                     }
                 });
             });
+
             $('#save-change').click(function(){
                 let url = $('#form-edit').attr('action');
                 let data = $('#form-edit').serialize();
@@ -123,6 +147,21 @@
                     }
                 });
                 return false;
+            });
+
+            $('#create-category-default').hide();
+            $('.create-new-category').click(function(){
+                let id = $(this).data('id');
+                let title = $(this).data('title');
+                $('#form-create-title').text('Create sub category for: ' + title);
+                $('input[name = parent]').val(id);
+                $('#create-category-default').show();
+            });
+
+            $('#create-category-default').click(function(){
+                $('#form-create-title').text('Create new category');
+                $('input[name = parent]').val(0);
+                $('#create-category-default').hide();
             });
         });
     </script>    
