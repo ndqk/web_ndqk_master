@@ -45,7 +45,7 @@
                 <option value="1" >All</option>
                 <option value="2" >Men</option>
                 <option value="3" >Women</option>
-                <option value="4" >Kid</option>
+                <option value="4" >Kids</option>
             </select>
         </div>
         <div class="form-group">
@@ -61,11 +61,11 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="inputPreImage">Thumbnail sản phẩm</label>
+            <label for="inputThumbImage">Thumbnail sản phẩm</label>
             <div class="input-group">
               <div class="custom-file">
-                <input name="thumbImage" type="file" class="custom-file-input" id="inputPreImage" multiple>
-                <label class="custom-file-label" for="inputPreImage">Choose file</label>
+                <input name="thumbImage[]" type="file" class="custom-file-input" id="inputThumbImage" multiple>
+                <label class="custom-file-label" for="inputThumbImage">Choose file</label>
               </div>
               <div class="input-group-append">
                 <span class="input-group-text" id="">Upload</span>

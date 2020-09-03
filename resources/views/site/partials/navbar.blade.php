@@ -23,33 +23,18 @@
                             <a href="{{asset('#')}}">Shop</a>
                             <div class="megamenu">
                                 @php
-                                    $categories = \App\Entity\Category::all();
-                                    \App\Entity\Category::showCategoriesInSite($categories, 0)
+                                    $categories = \App\Entity\Category::whereNull('category_id')
+                                                                        ->with('childrenCategories')
+                                                                        ->get();
                                 @endphp
-                                {{-- <ul class="single-mega cn-col-4">
-                                    <li class="title">Women's Collection</li>
-                                    <li><a href="{{asset('site/shop.html')}}">Dresses</a></li>
-                                    <li><a href="{{asset('site/shop.html')}}">Blouses &amp; Shirts</a></li>
-                                    <li><a href="{{asset('site/shop.html')}}">T-shirts</a></li>
-                                    <li><a href="{{asset('site/shop.html')}}">Rompers</a></li>
-                                    <li><a href="{{asset('site/shop.html')}}">Bras &amp; Panties</a></li>
-                                </ul>
-                                <ul class="single-mega cn-col-4">
-                                    <li class="title">Men's Collection</li>
-                                    <li><a href="{{asset('site/shop.html')}}">T-Shirts</a></li>
-                                    <li><a href="{{asset('site/shop.html')}}">Polo</a></li>
-                                    <li><a href="{{asset('site/shop.html')}}">Shirts</a></li>
-                                    <li><a href="{{asset('site/shop.html')}}">Jackets</a></li>
-                                    <li><a href="{{asset('site/shop.html')}}">Trench</a></li>
-                                </ul>
-                                <ul class="single-mega cn-col-4">
-                                    <li class="title">Kid's Collection</li>
-                                    <li><a href="{{asset('site/shop.html')}}">Dresses</a></li>
-                                    <li><a href="{{asset('site/shop.html')}}">Shirts</a></li>
-                                    <li><a href="{{asset('site/shop.html')}}">T-shirts</a></li>
-                                    <li><a href="{{asset('site/shop.html')}}">Jackets</a></li>
-                                    <li><a href="{{asset('site/shop.html')}}">Trench</a></li>
-                                </ul> --}}
+                                @foreach ($categories as $category)
+                                    <ul class="single-mega cn-col-4">
+                                        <li class="title">{{$category->title}}</li>
+                                        @foreach ($category->childrenCategories as $childCategory)
+                                            @include('site.category.child_category', ['child_category' => $childCategory])
+                                        @endforeach
+                                    </ul> 
+                                @endforeach
                                 <div class="single-mega cn-col-4">
                                     <img src="{{asset('site/img/bg-img/bg-6.jpg')}}" alt="">
                                 </div>

@@ -25,7 +25,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
+        $categories = Category::whereNull('category_id')
+                                ->with('childrenCategories')
+                                ->get();
         return view('admin.category.list', compact('categories'));
     }
 
@@ -49,7 +51,7 @@ class CategoryController extends Controller
     {
         $cateData = [
             'title' => $request->title,
-            'parent' => $request->parent,
+            'category_id' => $request->parent == 0 ? null : $request->parent,
             'status' => 0
         ];
         $category = new Category($cateData);

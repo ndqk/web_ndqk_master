@@ -22,11 +22,13 @@
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Title</th>
-                            <th>Category</th>
-                            <th>Image</th>
-                            <th>Author</th>
-                            <th>View</th>
+                            <th>Tên sản phẩm</th>
+                            <th>Danh mục</th>
+                            <th>Ảnh sản phẩm</th>
+                            <th>Số lượng</th>
+                            <th>Đơn giá</th>
+                            <th>Giá khuyến mãi</th>
+                            <th>Dành cho</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
@@ -50,18 +52,32 @@
                 serverSide: true,
                 pageLength: 10,
                 ajax : {
-                    url : '{{ route('post.list') }}',
+                    url : '{{ route('product.list') }}',
                     type : 'GET',
                 },
                 columns : [
-                    {data : 'id', name : 'id'},
-                    {data : 'title', name : 'title'},
-                    {data : 'category', name : 'categories.title'},
+                    {data : 'id', name : 'products.id'},
+                    {data : 'name', name : 'name'},
+                    {data : 'title', name : 'categories.title'},
                     {data : 'image', render : function(data){
-                        return '<img src="/upload/image/post/'+data+'" width="100" />';
-                    },  name : 'images.image'},
-                    {data : 'name', name : 'users.name'},
-                    {data : 'view', name : 'view'},
+                        return '<img src="/upload/image/product/'+data+'" width="100" />';
+                    },  name : 'image_products.image'},
+                    {data : 'quantity', name : 'quantity'},
+                    {data : 'price', name : 'price'},
+                    {data : 'discount', name : 'discount'},
+                    {data : 'type', render(data){
+                        switch(data){
+                            case 1: 
+                                return 'All';
+                            case 2: 
+                                return 'Men';
+                            case 3: 
+                                return 'Women';
+                            case 4: 
+                                return 'Kids';
+                            default: return 'All';
+                        }
+                    },name : 'type'},
                     {data : 'status', name : 'status'},
                     {data : 'action', name : 'action', orderable : false, searchable:true},
                 ],

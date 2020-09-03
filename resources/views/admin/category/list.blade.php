@@ -13,7 +13,8 @@
                     <h3 class="card-title">List category</h3>
                 </div>
                 <div class="card-body">
-                    {{-- <ul class="tree-view">
+                    
+                    <ul class="tree-view">
                         @if (sizeof($categories))
                             @foreach ($categories as $category)
                                 <li >
@@ -28,33 +29,23 @@
                                     <a class="create-new-category" href="#" data-id={{$category->id}} data-title = {{$category->title}}>
                                         <i class="fas fa-plus"></i>
                                     </a>
-                                    <ul class="tree-view">
-                                        <li >
-                                            <span>abc</span>
-                                                    &ensp;
-                                            <a href="" data-toggle="modal" data-target="#modal-default" class="category-edit" >
-                                                <i class="fas fa-pencil-alt"></i>
-                                            </a>
-                                            <a href="">
-                                                <i class="fas fa-trash-alt"></i>
-                                            </a>
-                                            <a href="#" >
-                                                <i class="fas fa-plus"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
                                 </li>
+                                <ul class="tree-view">
+                                    @foreach ($category->childrenCategories as $childCategory)
+                                        @include('admin.category.child_category', ['child_category' => $childCategory])
+                                    @endforeach
+                                </ul>
                             @endforeach
                         @else
                             <p>Không có danh mục nào</p>
                         @endif
-                    </ul> --}}
-                    @php
+                    </ul>
+                    {{-- @php
                         if(sizeof($categories))
                             \App\Entity\Category::showCategories($categories, 0);
                         else
                             echo '<p>Không có danh mục nào</p>';
-                    @endphp
+                    @endphp --}}
                 </div>  
             </div>
         </div>
