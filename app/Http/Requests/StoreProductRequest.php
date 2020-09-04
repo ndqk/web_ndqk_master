@@ -29,6 +29,8 @@ class StoreProductRequest extends FormRequest
             'type' => 'required',
             'previewImage' => 'required',
             'description' => 'required',
+            'size' => 'required',
+            'color' => 'required'
         ];
     }
 
@@ -38,7 +40,9 @@ class StoreProductRequest extends FormRequest
             'price.required' => 'Đơn giá không được để trống',
             'type.required' => 'Sản phẩm dành cho không được để trống',
             'previewImage.required' => 'Ảnh sản phẩm không được để trống',
-            'description.required' => 'Mô tả sản phẩm không được để trống'
+            'description.required' => 'Mô tả sản phẩm không được để trống',
+            'size.required' => 'Kích cỡ sản phẩm không được để trống',
+            'color.required' => 'Màu của sản phẩm không được để trống'
         ];
     }
 }

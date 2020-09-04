@@ -49,6 +49,25 @@
             </select>
         </div>
         <div class="form-group">
+            <label>Cách kích cỡ của sản phẩm</label>
+            @foreach ($size_products as $size)
+              <div class="form-check">
+                <input name="size[]" value="{{$size->id}}" class="form-check-input" type="checkbox">
+                <label class="form-check-label">{{strtoupper($size->value)}}</label>
+              </div>
+            @endforeach
+        </div>
+        <div class="form-group">
+            <label>Cách màu của sản phẩm</label>
+            @foreach ($color_products as $color)
+              <div class="form-check">
+                <input name="color[]" value="{{$color->id}}" class="form-check-input" type="checkbox">
+                <label class="form-check-label">{{strtoupper($color->value)}}</label>
+              </div>
+            @endforeach
+        </div>
+
+        <div class="form-group">
             <label for="inputPreImage">Ảnh sản phẩm*</label>
             <div class="input-group">
               <div class="custom-file">

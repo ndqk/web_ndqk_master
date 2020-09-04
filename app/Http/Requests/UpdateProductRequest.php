@@ -28,6 +28,8 @@ class UpdateProductRequest extends FormRequest
             'price' => 'required',
             'type' => 'required',
             'description' => 'required',
+            'size' => 'required',
+            'color' => 'required'
         ];
     }
 
@@ -36,7 +38,9 @@ class UpdateProductRequest extends FormRequest
             'name.required' => 'Tên sản phẩm không được để trống',
             'price.required' => 'Đơn giá không được để trống',
             'type.required' => 'Sản phẩm dành cho không được để trống',
-            'description.required' => 'Mô tả sản phẩm không được để trống'
+            'description.required' => 'Mô tả sản phẩm không được để trống',
+            'size.required' => 'Kích cỡ sản phẩm không được để trống',
+            'color.required' => 'Màu của sản phẩm không được để trống'
         ];
     }
 }

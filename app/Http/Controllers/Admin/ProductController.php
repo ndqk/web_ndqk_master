@@ -8,17 +8,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\Datatables\Datatables;
 
-use App\Entity\{Category, Product, ImageProduct};
+use App\Entity\{Category, Product, ImageProduct, Attribute, ProductHasAttribute};
 
 use App\Http\Requests\{StoreProductRequest, UpdateProductRequest};
 
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
 
     function __construct(){
         $this->middleware('permission:product-list|product-create|product-edit|product-delete', ['only' => 'index']);
@@ -32,13 +27,8 @@ class ProductController extends Controller
         return view('admin.product.list');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function getList(){
-        $products = Product::join('categories', 'categories.id', 'category_id')
+        $products = Product::join('categories', 'categories.id', 'products.category_id')
                             ->join('image_products', 'image_products.product_id', 'products.id')
                             ->where('image_products.status', 0)
                             ->select('products.id', 'products.name', 'products.price', 'products.quantity', 'products.discount',
@@ -55,15 +45,15 @@ class ProductController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('admin.product.create', compact('categories'));
+        $sizeProducts = Attribute::where('name' , 'size')->get();
+        $colorProducts = Attribute::where('name' , 'color')->get();
+        return view('admin.product.create', [
+            'categories' => $categories,
+            'size_products' => $sizeProducts,
+            'color_products' => $colorProducts
+        ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(StoreProductRequest $request)
     {
         $product = [
@@ -78,9 +68,16 @@ class ProductController extends Controller
             'view' => 0,
             'status' => $request->status
         ];
+        $attrs =  array_merge($request->size, $request->color);
 
         $storeProduct = new Product($product);
         $storeProduct->save();
+
+        foreach($attrs as $attr)
+            ProductHasAttribute::insert([
+                'product_id' => $storeProduct->id, 
+                'attribute_id' => $attr
+            ]);
 
         if($request->has('previewImage')){
             ImageProduct::insert([
@@ -105,46 +102,37 @@ class ProductController extends Controller
         
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+   
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    
     public function edit($id)
     {
         $categories = Category::all();
-        $editProduct = Product::findOrFail($id);
+        $editProduct = Product::with('attributes')->findOrFail($id);
+        $attrChecked = $editProduct->attributes->pluck('id')->all();
         $previewImage = ImageProduct::where('product_id', $editProduct->id)
                                     ->where('status', 0)->first();
         $thumbImages = ImageProduct::where('product_id', $editProduct->id)
                                     ->where('status', 1)->get();
+        $sizeProducts = Attribute::where('name' , 'size')->get();
+        $colorProducts = Attribute::where('name' , 'color')->get();
+
         return view('admin.product.edit', [
             'categories' => $categories,
             'editProduct' => $editProduct,
             'previewImage' => $previewImage,
-            'thumbImages' => $thumbImages
+            'thumbImages' => $thumbImages,
+            'size_products' => $sizeProducts,
+            'color_products' => $colorProducts,
+            'attr_checked' => $attrChecked
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+   
     public function update(UpdateProductRequest $request, $id)
     {
         $product = [
@@ -159,6 +147,14 @@ class ProductController extends Controller
             'view' => 0,
             'status' => $request->status
         ];
+
+        $attrs = array_merge($request->size, $request->color);
+        ProductHasAttribute::where('product_id', $id)->delete();
+        foreach($attrs as $attr)
+        ProductHasAttribute::insert([
+            'product_id' => $id, 
+            'attribute_id' => $attr
+        ]);
 
         $updateProduct = Product::findOrFail($id);
         $updateProduct->update($product);
@@ -204,14 +200,9 @@ class ProductController extends Controller
         return redirect()->back()->with('status', 'Sửa sản phẩm thành công');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
+        ProductHasAttribute::where('product_id', $id)->delete();
         $deleteImages = ImageProduct::where('product_id', $id)->get();
         foreach($deleteImages as $image){
             $this->deleteFile('/upload/image/product/'.$image->image);

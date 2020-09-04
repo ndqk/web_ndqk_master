@@ -49,6 +49,28 @@
                 <option value="4" {{$editProduct->type == 4 ? 'selected' : ''}}>Kids</option>
             </select>
         </div>
+
+        <div class="form-group">
+            <label>Cách kích cỡ của sản phẩm</label>
+            @foreach ($size_products as $size)
+              <div class="form-check">
+                <input name="size[]" value="{{$size->id}}" class="form-check-input" type="checkbox"
+                {{in_array($size->id, $attr_checked) ? 'checked' : ''}}>
+                <label class="form-check-label">{{strtoupper($size->value)}}</label>
+              </div>
+            @endforeach
+        </div>
+        <div class="form-group">
+            <label>Cách màu của sản phẩm</label>
+            @foreach ($color_products as $color)
+              <div class="form-check">
+                <input name="color[]" value="{{$color->id}}" class="form-check-input" type="checkbox" 
+                {{in_array($color->id, $attr_checked) ? 'checked' : ''}}>
+                <label class="form-check-label">{{strtoupper($color->value)}}</label>
+              </div>
+            @endforeach
+        </div>
+
         <div class="form-group">
             <label for="inputPreImage">Ảnh sản phẩm*</label>
             <img src="/upload/image/product/{{$previewImage->image}}" width="100" />

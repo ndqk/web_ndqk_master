@@ -30,6 +30,7 @@
                                 @foreach ($categories as $category)
                                     <ul class="single-mega cn-col-4">
                                         <li class="title">{{$category->title}}</li>
+                                        <li><a href="{{route('site.category', $category->slug)}}">All</a></li>
                                         @foreach ($category->childrenCategories as $childCategory)
                                             @include('site.category.child_category', ['child_category' => $childCategory])
                                         @endforeach
@@ -74,10 +75,31 @@
             <div class="favourite-area">
                 <a href="{{asset('#')}}"><img src="{{asset('site/img/core-img/heart.svg')}}" alt=""></a>
             </div>
-            <!-- User Login Info -->
-            <div class="user-login-info">
-                <a href="{{asset('#')}}"><img src="{{asset('site/img/core-img/user.svg')}}" alt=""></a>
+            @if (\Illuminate\Support\Facades\Auth::check())
+            <div  class="user-login-info">
+                <ul>
+                    <li class="nav-item dropdown show">
+                        <a   data-toggle="dropdown" aria-expanded="true" href="{{asset('#')}}"><img src="{{asset('site/img/core-img/user.svg')}}" alt=""></a>
+                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="left: inherit; right: 0px;">
+                          {{-- <div class="dropdown-divider"></div> --}}
+                          <a href="http://127.0.0.1:8000/admin/profile" class="dropdown-item">
+                            <i class="fas fa-user mr-2"></i> Profile
+                          </a>
+                          <div class="dropdown-divider"></div>
+                          <a href="{{route('site.logout')}}" class="dropdown-item">
+                            <i class="fas fa-sign-out-alt mr-2"></i> Logout
+                          </a>
+                        </div>
+                    </li>
+                </ul>
             </div>
+            @else
+                <!-- User Login Info -->
+                <div class="user-login-info">
+                    <a href="{{route('site.login')}}"><img src="{{asset('site/img/core-img/login.svg')}}" alt=""></a>
+                </div>
+            @endif
+            
             <!-- Cart Area -->
             <div class="cart-area">
                 <a href="{{asset('#')}}" id="essenceCartBtn"><img src="{{asset('site/img/core-img/bag.svg')}}" alt=""> <span>3</span></a>

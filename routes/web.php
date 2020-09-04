@@ -105,11 +105,16 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['che
 });
 
 Route::group(['prefix' => '/', 'namespace' => 'Site'], function () {
-    Route::get('/', 'HomeController@index')->name('site.home');
+    Route::get('/login', 'LoginController@index')->name('site.login');
+    Route::post('/login', 'LoginController@login')->name('site.login');
+    Route::get('/logout', 'LoginController@logout')->name('site.logout');
 
-    Route::get('category/{id}', function ($id) {
-        return view('site.category.category');
-    })->name('site.category');
+    Route::get('/redirect', 'LoginController@loginFacebook')->name('socialite.redirect');
+    Route::get('/callback', 'LoginController@callbackFacebook')->name('socialite.callback');
+});
+
+Route::group(['prefix' => '/', 'namespace' => 'Site'], function () {
+    Route::get('/', 'HomeController@index')->name('site.home');
 
     Route::get('blog', function () {
         return view('site.blog.index');
@@ -127,6 +132,8 @@ Route::group(['prefix' => '/', 'namespace' => 'Site'], function () {
         return $id;
     })->name('site.post');
 
-
+    Route::get('/{category}/{product}', 'ProductController@detail')->name('product.detail');
+    Route::post('/{category}', 'CategoryController@filter')->name('category.filter');
+    Route::get('/{category}', 'CategoryController@index')->name('site.category');
 });
 
