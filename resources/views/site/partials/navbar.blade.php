@@ -75,14 +75,14 @@
             <div class="favourite-area">
                 <a href="{{asset('#')}}"><img src="{{asset('site/img/core-img/heart.svg')}}" alt=""></a>
             </div>
-            @if (\Illuminate\Support\Facades\Auth::check())
+            @if (\Illuminate\Support\Facades\Auth::guard('customer')->check())
             <div  class="user-login-info">
                 <ul>
                     <li class="nav-item dropdown show">
                         <a   data-toggle="dropdown" aria-expanded="true" href="{{asset('#')}}"><img src="{{asset('site/img/core-img/user.svg')}}" alt=""></a>
                         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="left: inherit; right: 0px;">
                           {{-- <div class="dropdown-divider"></div> --}}
-                          <a href="http://127.0.0.1:8000/admin/profile" class="dropdown-item">
+                          <a href="{{route('customer.profile')}}" class="dropdown-item">
                             <i class="fas fa-user mr-2"></i> Profile
                           </a>
                           <div class="dropdown-divider"></div>

@@ -17,6 +17,7 @@
           toastr.options.timeOut = 2000;
           toastr.options.preventDuplicates = true;
           toastr.error('{{ $error }}');
+          @break
         @endforeach
       });
   </script>

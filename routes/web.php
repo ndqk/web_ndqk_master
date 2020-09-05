@@ -104,17 +104,33 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['che
     });
 });
 
-Route::group(['prefix' => '/', 'namespace' => 'Site'], function () {
+Route::group(['prefix' => '/', 'namespace' => 'Site', 'middleware' => ['check.login.site']], function () {
     Route::get('/login', 'LoginController@index')->name('site.login');
     Route::post('/login', 'LoginController@login')->name('site.login');
-    Route::get('/logout', 'LoginController@logout')->name('site.logout');
+    //
+    Route::get('/register', 'RegisterController@index')->name('site.register');
+    Route::post('/register', 'RegisterController@register')->name('site.register');
+    //
+    Route::get('/redirect/{driver}', 'LoginController@redirect')->name('socialite.redirect');
+    Route::get('/callback/{driver}', 'LoginController@callback')->name('socialite.callback');
+});
 
-    Route::get('/redirect', 'LoginController@loginFacebook')->name('socialite.redirect');
-    Route::get('/callback', 'LoginController@callbackFacebook')->name('socialite.callback');
+Route::group(['prefix' => '/location'], function () {
+    Route::get('/district/{province}', 'LocationController@districts');
+    Route::get('/ward/{district}', 'LocationController@wards'); 
 });
 
 Route::group(['prefix' => '/', 'namespace' => 'Site'], function () {
     Route::get('/', 'HomeController@index')->name('site.home');
+    Route::get('/logout', 'LoginController@logout')->name('site.logout');
+
+    Route::group(['prefix' => 'profile'], function () {
+        Route::get('/', 'CustomerController@profile')->name('customer.profile');
+        Route::post('/update', 'CustomerController@profileUpdate')->name('customer.profile.update');
+        Route::post('/change-password', 'CustomerController@profileChangePassword')->name('customer.change.password');
+        
+        Route::post('billing-address-create', 'CustomerController@createBillingAddress')->name('customer.billing.address.create');
+    });
 
     Route::get('blog', function () {
         return view('site.blog.index');

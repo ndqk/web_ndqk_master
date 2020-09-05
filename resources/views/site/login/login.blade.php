@@ -28,12 +28,12 @@
                             <h2>New to our Shop?</h2>
                             <p>There are advances being made in science and technology
                                 everyday, and a good example of this is the</p>
-                            <a href="#" class="btn_3">Create an Account</a>
+                            <a href="{{route('site.register')}}" class="btn_3">Create an Account</a>
                             <hr class="my-4"> 
-                                <a class="btn btn-lg btn-google btn-block text-uppercase" type="submit">
+                                <a href="{{route('socialite.redirect', 'google')}}" class="btn btn-lg btn-google btn-block text-uppercase" type="submit">
                                     <i class="fab fa-google mr-2"></i> Sign in with Google
                                 </a> 
-                                <a href="{{route('socialite.redirect')}}" class="btn btn-lg btn-facebook btn-block text-uppercase" type="submit">
+                                <a href="{{route('socialite.redirect', 'facebook')}}" class="btn btn-lg btn-facebook btn-block text-uppercase" type="submit">
                                     <i class="fab fa-facebook-f mr-2"></i> Sign in with Facebook
                                 </a>
                         </div>

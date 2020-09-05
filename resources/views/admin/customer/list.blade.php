@@ -26,7 +26,6 @@
                             <th>Email</th>
                             <th>Address</th>
                             <th>Phone</th>
-                            <th>Role</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -58,7 +57,6 @@
                     {data : 'email', name : 'email'},
                     {data : 'address', name : 'address'},
                     {data : 'phone', name : 'phone'},
-                    {data : 'role', name : 'role'},
                     {data : 'action', name : 'action', orderable : false, searchable:true},
                 ],
             });

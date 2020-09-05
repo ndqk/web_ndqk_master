@@ -35,7 +35,7 @@
             <label for="InputPhone">Số điện thoại *</label>
             <input type="text" name="phone" class="form-control" id="InputPhone" placeholder="Phone" value="{{$user->phone}}" >
         </div>
-        <div class="form-group">
+        {{-- <div class="form-group">
             <label for="InputRole">Chức vụ</label>
             <select name="role" id="InputRole" class="custom-select">
                 @foreach ($roles as $role)
@@ -44,7 +44,7 @@
                   </option>
                 @endforeach
             </select>
-        </div>
+        </div> --}}
         
       </div>
       <!-- /.card-body -->

@@ -18,7 +18,7 @@ class LoginController extends Controller
     public function showLoginForm(){
         $roles = Role::where('name','<>', 'Customer')->pluck('name');
         $checkRoles = (array)$roles;
-        if(Auth::check() && Auth::user()->hasRole($checkRoles)){
+        if(Auth::guard('web')->check() && Auth::guard('web')->user()->hasRole($checkRoles)){
             return redirect()->route('admin.home');
         }
         return view('admin.login.login');
@@ -29,7 +29,7 @@ class LoginController extends Controller
             'email' => $request->input('email'),
             'password' => $request->input('password')
         ];
-        if(Auth::attempt($user)){
+        if(Auth::guard('web')->attempt($user)){
             return redirect()->route('admin.home');
         }
         else{
@@ -39,9 +39,9 @@ class LoginController extends Controller
     }
 
     public function logout(){
-        if(!Auth::check())
+        if(!Auth::guard('web')->check())
             return redirect()->route('admin.login');
-        Auth::logout();
+        Auth::guard('web')->logout();
         return redirect()->route('admin.login');
     }
 }

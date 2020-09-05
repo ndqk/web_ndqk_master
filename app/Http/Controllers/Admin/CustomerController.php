@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\DB;
 
-use App\Entity\User;
+use App\Entity\{User, Customer};
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
@@ -31,14 +31,10 @@ class CustomerController extends Controller
     }
 
     public function getList(){
-        $user = User::join('model_has_roles', 'users.id', 'model_has_roles.model_id')
-                    ->join('roles', 'roles.id', 'model_has_roles.role_id')
-                    ->where('roles.name', 'Customer')
-                    ->select('users.id', 'users.name' ,'users.email', 'users.address', 'users.phone', 'roles.name as role');
-        
-            return Datatables::of($user)->addColumn('action', function($user){
-                $string =   '<a href="'.route('customer.edit', $user->id).'">Edit </a>';
-                $string .=  '<a href="'.route('customer.delete', $user->id).'">&emsp;Delete</a>';
+        $customers = Customer::all();
+            return Datatables::of($customers)->addColumn('action', function($customer){
+                $string =   '<a href="'.route('customer.edit', $customer->id).'">Edit </a>';
+                $string .=  '<a href="'.route('customer.delete', $customer->id).'">&emsp;Delete</a>';
                 
                 return $string;
             })->make(true);
@@ -50,7 +46,7 @@ class CustomerController extends Controller
     }
 
     public function store(StoreUserRequest $request){
-        $user = User::create([
+        $user = Customer::create([
             'name' => $request->input('name'),
             'email' => $request->input('email'),
             'password' => bcrypt($request->input('password')),
@@ -58,19 +54,16 @@ class CustomerController extends Controller
             'phone' => $request->input('phone'),
         ]);
 
-        $user->assignRole('Customer');
-
         return redirect()->back()->with('status', 'Thêm thành công');
     }
 
     public function edit($userId){
-        $user = User::findOrFail($userId);
-        $roles = Role::pluck('name','name')->all();
-        return view('admin.customer.edit', compact('user', 'roles'));
+        $user = Customer::findOrFail($userId);
+        return view('admin.customer.edit', compact('user'));
     }
 
     public function update(EditUserRequest $request, $userId){
-        $user = User::findOrFail($userId);
+        $user = Customer::findOrFail($userId);
         $updateData = [
             'name' => $request->name,
             'password' => bcrypt($request->password),
@@ -101,15 +94,13 @@ class CustomerController extends Controller
         }
         
         $user->update($updateData);        
-        $user->syncRoles([$request->role]);
         
         return redirect()->back()->with('status', 'Chỉnh sửa thành công');
     }
 
     public function destroy($userId){
-        $deleteUser = User::findOrFail($userId);
+        $deleteUser = Customer::findOrFail($userId);
         $deleteUser->delete();
-        $deleteModel_has_role = DB::table('model_has_roles')->where('model_id', $userId)->delete();
         return redirect()->back()->with('status', 'Xóa thành công');
     }
 }

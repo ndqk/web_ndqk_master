@@ -37,7 +37,6 @@ class UserController extends Controller
     public function getList(){
         $user = User::join('model_has_roles', 'users.id', 'model_has_roles.model_id')
                     ->join('roles', 'roles.id', 'model_has_roles.role_id')
-                    ->whereNotIn('roles.name', ['Customer'])
                     ->select('users.id', 'users.name' ,'users.email', 'users.address', 'users.phone', 'roles.name as role');
             
             return Datatables::of($user)->addColumn('action', function($user){
