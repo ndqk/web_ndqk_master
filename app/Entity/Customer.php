@@ -32,4 +32,8 @@ class Customer extends Authenticatable
     public function billingAddress(){
         return $this->hasOne(BillingAddress::class);
     }
+
+    public function cart(){
+        return $this->hasOne(Cart::class);
+    }
 }

@@ -61,6 +61,55 @@
 
     @include('partials.alert')
 
+    <script>
+        $(document).on('click', '.add-to-cart-btn a', function(){
+                let url = $(this).attr('href');
+                $.ajax({
+                    type: 'GET',
+                    url: url,
+                    success : function(res){
+                        //console.log(res);
+                        $('#essenceCartBtn span').html(res);
+                    }
+                });
+                return false;
+            });
+
+            $(document).on('click', '#essenceCartBtn', function(){
+                let url = $(this).attr('href');
+                $.ajax({
+                    type: 'POST',
+                    url: url,
+                    headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(res){
+                        //console.log(res);
+                        $('.cart-content').html(res);
+                    }
+                });
+                return false;
+            });
+
+            $(document).on('click', '.product-remove', function(){
+                let url = $(this).children().data('link');
+                $.ajax({
+                    type: 'POST',
+                    url: url,
+                    headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(res){
+                        //console.log(res);
+                        $('.cart-content').html(res);
+                        let tmp = parseInt($('#essenceCartBtn span').html());
+                        $('#essenceCartBtn span').html((tmp - 1 != 0) ? tmp - 1 : '');
+                    }
+                });
+                return false;
+            })
+    </script>
+
     @yield('js')
     @stack('script')
 

@@ -85,6 +85,7 @@
                     max : $(selector).slider('option', 'values')[1],
                 }
             }
+   
         });
     </script>
 @endpush

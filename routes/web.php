@@ -128,8 +128,21 @@ Route::group(['prefix' => '/', 'namespace' => 'Site'], function () {
         Route::get('/', 'CustomerController@profile')->name('customer.profile');
         Route::post('/update', 'CustomerController@profileUpdate')->name('customer.profile.update');
         Route::post('/change-password', 'CustomerController@profileChangePassword')->name('customer.change.password');
-        
         Route::post('billing-address-create', 'CustomerController@createBillingAddress')->name('customer.billing.address.create');
+    });
+
+    Route::group(['prefix' => 'cart'], function () {
+        Route::get('/', 'CartController@index')->name('cart.index');
+        Route::post('/', 'CartController@indexPost')->name('cart.index');
+        Route::get('/store/{product:id}', 'CartController@store')->name('cart.store'); 
+        Route::post('/delete/{id}', 'CartController@deletePost')->name('cart.delete');
+        Route::get('/delete/{id}', 'CartController@delete')->name('cart.delete');
+        
+    });
+
+    Route::get('/checkout', 'CheckOutController@index')->name('checkout.index');
+    Route::group(['prefix' => 'order'], function () {
+        Route::post('/request', 'OrderController@orderRequest')->name('order.request');
     });
 
     Route::get('blog', function () {
